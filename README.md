@@ -1,6 +1,6 @@
 paper-chip
 ==========
-Material Design: [Chips](thttp://www.google.com/design/spec/components/chips.html)
+Material Design: [Chips](http://www.google.com/design/spec/components/chips.html)
 
 `paper-chip` is a small element represents a complex entity such as a calendar
 event or a contact. The chip can be in an opened (active) or closed (inactive)
