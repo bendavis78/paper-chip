@@ -9,11 +9,10 @@
 Material Design: [http://www.google.com/design/spec/components/chips.html](Chips)
 
 `paper-chip` is a small element represents a complex entity such as a calendar
-event or a contact. The chip can be in an opened (active) or closed (inactive)
-state. In its closed state, it contains an icon and a short title. In its open
-state, the chip expands to show more detail about the represented entity, as
-well as (optionally) a "remove" button that removes the chip element from the
-DOM.
+event or a contact. The chip can be in an opened or closed state. In its closed
+state, it contains an icon and a short title. In its open state, the chip
+expands to show more detail about the represented entity, as well as
+(optionally) a "remove" button that removes the chip element from the DOM.
 
 The following child elements may be placed within the chip tag define its
 content:
@@ -24,7 +23,7 @@ content:
   * h2: A secondary label, shown only in the opened state
 
 The `removable` attribute can be used to add a button which removes the chip
-from teh DOM.
+from the DOM.
 
 ## Examples:
 
@@ -103,33 +102,33 @@ Basic chip with single letter instead of an icon
         font-weight: normal;
         font-size: 14px;
       }
-      :host([active]) #main {
+      :host([opened]) #main {
         border-radius: 0;
       }
-      :host([active]) #chip {
+      :host([opened]) #chip {
         box-sizing: border-box;
         padding: 16px 12px;
         color: #FFF;
         background: #00B8D4;
         height: 72px;
       }
-      :host([active]) paper-shadow {
+      :host([opened]) paper-shadow {
         border-radius: 0; 
       }
-      :host([active]) #icon {
+      :host([opened]) #icon {
         border-radius: 20px;
         font-size: 20px;
       }
-      :host([active]) #icon,
-      :host([active]) #icon ::content core-icon.icon,
-      :host([active]) #icon ::content core-icon.icon svg {
+      :host([opened]) #icon,
+      :host([opened]) #icon ::content core-icon.icon,
+      :host([opened]) #icon ::content core-icon.icon svg {
         width: 40px;
         height: 40px;
       }
-      :host([active]) #label ::content h1 {
+      :host([opened]) #label ::content h1 {
         font-size: 16px;
       }
-      :host([active]) #removeBtn /deep/ core-icon {
+      :host([opened]) #removeBtn /deep/ core-icon {
         padding: 0;
         margin: 0;
         width: 20px;
@@ -139,10 +138,10 @@ Basic chip with single letter instead of an icon
         background: #fff;
         border-radius: 10px;
       }
-      :host([active]) #removeBtn /deep/ core-icon svg {
+      :host([opened]) #removeBtn /deep/ core-icon svg {
     </style>
     <div id="main" layout vertical>
-      <template if="{{focused || active}}">
+      <template if="{{focused || opened}}">
         <paper-shadow id="shadow" fit animated></paper-shadow>
       </template>
       <div id="chip" layout horizontal center>
@@ -151,17 +150,17 @@ Basic chip with single letter instead of an icon
         </div>
         <div id="label" flex self-center>
           <content select="h1"></content>
-          <template if="{{active}}">
+          <template if="{{opened}}">
             <content select="h2"></content>
           </template>
         </div>
-        <template if="{{active && removable}}">
+        <template if="{{opened && removable}}">
           <div self-center>
             <paper-icon-button id="removeBtn" icon="close" on-up="{{upAction}}" on-tap="{{remove}}"></paper-icon-button>
           </div>
         </template>
       </div>
-      <template if="{{active}}">
+      <template if="{{opened}}">
         <div flex><content></content></div>
       </template>
     </div>
@@ -170,11 +169,30 @@ Basic chip with single letter instead of an icon
   <script>
     Polymer(Polymer.mixin2({
       publish: {
+        /**
+         * Whether or not the chip is removable. If true, a remove button will
+         * be shown.
+         * 
+         * @attribute removable
+         * @type boolean
+         * @default false
+         */
         removable: {
           value: false,
           reflect: true
         },
-        active: {value: false, reflect: true}
+
+        /**
+         * Whether or not the chip is in its opened state
+         * 
+         * @attribute opened
+         * @type boolean
+         * @default false
+         */
+        opened: {
+          value: false,
+          reflect: true
+        }
       },
       eventDelegates: {
         down: 'downAction',
@@ -189,16 +207,21 @@ Basic chip with single letter instead of an icon
         if (e.target != this.$.removeBtn) {
           console.log('upAction ', e.target);
           this.pressed = false;
-          this.active = !this.active;
+          this.opened = !this.opened;
         }
       },
       blurAction() {
         this.pressed = false;
-        this.active = false;
+        this.opened = false;
         this.focused = false;
       },
+      /**
+       * Fired before the element is removed. This event is cancelable.
+       * 
+       * @event remove
+       */
       remove() {
-        var e = this.fire('remove');
+        var e = this.fire('remove', {}, this, false, true);
         if (!e.defaultPrevented) {
           this.parentNode.removeChild(this);
         }
