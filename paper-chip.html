@@ -1,0 +1,209 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-focusable/core-focusable.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
+
+<script src="focusable.js"></script>
+
+<!--
+Material Design: [http://www.google.com/design/spec/components/chips.html](Chips)
+
+`paper-chip` is a small element represents a complex entity such as a calendar
+event or a contact. The chip can be in an opened (active) or closed (inactive)
+state. In its closed state, it contains an icon and a short title. In its open
+state, the chip expands to show more detail about the represented entity, as
+well as (optionally) a "remove" button that removes the chip element from the
+DOM.
+
+The following child elements may be placed within the chip tag define its
+content:
+
+  * .icon: The icon representing the chip. This may be any element, for
+            example, a `<core-icon>` or a simple `<span>` with a single letter
+  * h1: The chip label, shown in both closed and opened states
+  * h2: A secondary label, shown only in the opened state
+
+The `removable` attribute can be used to add a button which removes the chip
+from teh DOM.
+
+## Examples:
+
+Removable chip with core-icon
+
+    <paper-chip removable>
+      <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
+      <h1>John Doe</h1>
+      <h2>jdoe@example.com</h2>
+    </paper-chip>
+
+Basic chip with single letter instead of an icon
+
+    <paper-chip label="Jane Doe">
+      <div class="icon" flex>J</div>
+      <h1>jdoe@example.com</h1>
+    </paper-chip>
+
+
+@element paper-chip
+@blurb A basic "chip" element representing an icon/image and a short piece of text.
+@status alpha
+@homepage https://github.com/bendavis78/paper-dialog-fullscreen
+-->
+<polymer-element name="paper-chip" tabindex="0">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        border-radius: 16px;
+        outline: none;
+        background: #EBEBEB;
+        font-size: 14px;
+        color: #989898;
+        cursor: default;
+        margin: 8px 0;
+      }
+      #main {
+        position: relative;
+      }
+      #chip {
+        height: 32px;
+      }
+      paper-shadow {
+        border-radius: 16px;
+      }
+      #icon {
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+        border-radius: 16px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        background: #989898;
+        color: #EBEBEB;
+        line-height: 32px;
+        margin-right: 8px;
+      }
+      #icon ::content core-icon.icon,
+      #icon ::content core-icon.icon svg {
+        width: 32px;
+        height: 32px;
+      }
+      #icon ::content core-icon.icon {
+        vertical-align: bottom;
+      }
+      #label {
+        padding-right: 12px;
+      }
+      #label ::content h1,
+      #label ::content h2 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 14px;
+      }
+      :host([active]) #main {
+        border-radius: 0;
+      }
+      :host([active]) #chip {
+        box-sizing: border-box;
+        padding: 16px 12px;
+        color: #FFF;
+        background: #00B8D4;
+        height: 72px;
+      }
+      :host([active]) paper-shadow {
+        border-radius: 0; 
+      }
+      :host([active]) #icon {
+        border-radius: 20px;
+        font-size: 20px;
+      }
+      :host([active]) #icon,
+      :host([active]) #icon ::content core-icon.icon,
+      :host([active]) #icon ::content core-icon.icon svg {
+        width: 40px;
+        height: 40px;
+      }
+      :host([active]) #label ::content h1 {
+        font-size: 16px;
+      }
+      :host([active]) #removeBtn /deep/ core-icon {
+        padding: 0;
+        margin: 0;
+        width: 20px;
+        height: 20px;
+        margin-left: 20px;
+        color: #00b8d4;
+        background: #fff;
+        border-radius: 10px;
+      }
+      :host([active]) #removeBtn /deep/ core-icon svg {
+    </style>
+    <div id="main" layout vertical>
+      <template if="{{focused || active}}">
+        <paper-shadow id="shadow" fit animated></paper-shadow>
+      </template>
+      <div id="chip" layout horizontal center>
+        <div id="icon" layout horizontal center center-justified>
+          <content select=".icon"></content>
+        </div>
+        <div id="label" flex self-center>
+          <content select="h1"></content>
+          <template if="{{active}}">
+            <content select="h2"></content>
+          </template>
+        </div>
+        <template if="{{active && removable}}">
+          <div self-center>
+            <paper-icon-button id="removeBtn" icon="close" on-up="{{upAction}}" on-tap="{{remove}}"></paper-icon-button>
+          </div>
+        </template>
+      </div>
+      <template if="{{active}}">
+        <div flex><content></content></div>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    Polymer(Polymer.mixin2({
+      publish: {
+        removable: {
+          value: false,
+          reflect: true
+        },
+        active: {value: false, reflect: true}
+      },
+      eventDelegates: {
+        down: 'downAction',
+        up: 'upAction',
+        blur: 'blurAction'
+      },
+      downAction() {
+        this.pressed = true;
+        this.focused = true;
+      },
+      upAction(e) {
+        if (e.target != this.$.removeBtn) {
+          console.log('upAction ', e.target);
+          this.pressed = false;
+          this.active = !this.active;
+        }
+      },
+      blurAction() {
+        this.pressed = false;
+        this.active = false;
+        this.focused = false;
+      },
+      remove() {
+        var e = this.fire('remove');
+        if (!e.defaultPrevented) {
+          this.parentNode.removeChild(this);
+        }
+      },
+    }, Polymer.CoreFocusable));
+  </script>
+
+</polymer-element>

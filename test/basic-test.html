@@ -1,0 +1,56 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>paper-dialog-fullscreen</title>
+
+  <script src="../../webcomponentsjs/webcomponent.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../paper-dialog-fullscreen.html">
+</head>
+<body>
+
+  <!-- You use the document as a place to set up your fixtures. -->
+  <paper-dialog-fullscreen></paper-dialog-fullscreen>
+
+  <script>
+    var myEl = document.querySelector('paper-dialog-fullscreen');
+
+    suite('<paper-dialog-fullscreen>', function() {
+
+      test('defines the "author" property', function() {
+        assert.equal(myEl.author, 'Dimitri Glazkov');
+      });
+
+      test('says hello', function() {
+        assert.equal(myEl.sayHello(), 'paper-dialog-fullscreen says, Hello World!');
+
+        var greetings = myEl.sayHello('greetings Earthlings');
+        assert.equal(greetings, 'paper-dialog-fullscreen says, greetings Earthlings');
+      });
+
+      test('fires lasers', function(done) {
+        myEl.addEventListener('paper-dialog-fullscreen-lasers-success', function(event) {
+          assert.equal(event.detail.sound, 'Pew pew pew!');
+          done();
+        });
+        myEl.fireLasers();
+      });
+
+    });
+  </script>
+
+</body>
+</html>
