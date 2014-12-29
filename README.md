@@ -1,6 +1,6 @@
 paper-chip
 ==========
-Material Design: [http://www.google.com/design/spec/components/chips.html](Chips)
+Material Design: [Chips](thttp://www.google.com/design/spec/components/chips.html)
 
 `paper-chip` is a small element represents a complex entity such as a calendar
 event or a contact. The chip can be in an opened (active) or closed (inactive)
@@ -12,10 +12,10 @@ DOM.
 The following child elements may be placed within the chip tag define its
 content:
 
-  * .icon: The icon representing the chip. This may be any element, for
-            example, a `<core-icon>` or a simple `<span>` with a single letter
-  * h1: The chip label, shown in both closed and opened states
-  * h2: A secondary label, shown only in the opened state
+  * `.icon`: The icon representing the chip. This may be any element, for
+             example, a `<core-icon>` or a simple `<span>` with a single letter
+  * `h1`: The chip label, shown in both closed and opened states
+  * `h2`: A secondary label, shown only in the opened state
 
 The `removable` attribute can be used to add a button which removes the chip
 from teh DOM.
