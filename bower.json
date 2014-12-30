@@ -1,20 +1,20 @@
 {
-  "name": "paper-dialog-fullscreen",
+  "name": "paper-chip",
   "version": "0.1.0",
   "authors": [
     "Ben Davis <bendavis78@gmail.com>"
   ],
-  "description": "Full-screen paper dialog with header bar and actions at the top",
+  "description": "Polymer element that represents a complex entity such as a calendar event or a contact.",
   "keywords": [
     "web-component",
     "web-components",
     "polymer",
-    "dialog",
-    "fullscreen"
+    "chip",
+    "paper-chip"
   ],
-  "main": "paper-dialog-fullscreen.html",
+  "main": "paper-chip.html",
   "license": "MIT",
-  "homepage": "https://github.com/bendavis78/paper-dialog-fullscreen/",
+  "homepage": "http://bendavis78.github.io/paper-chip/components/paper-chip/index.html",
   "ignore": [
     "/.*",
     "/tests/"
@@ -22,11 +22,8 @@
   "dependencies": {
     "polymer": "Polymer/polymer#0.5.1",
     "webcomponents": "Polymer/webcomponentsjs#0.5.1",
-    "paper-dialog": "Polymer/paper-dialog#0.5.1",
-    "core-header-panel": "Polymer/core-header-panel#0.5.1",
+    "core-focusable": "Polymer/core-focusable#0.5.1",
     "paper-icon-button": "Polymer/paper-icon-button#0.5.1",
-    "core-toolbar": "Polymer/core-toolbar#0.5.1",
-    "core-media-query": "Polymer/core-media-query#0.5.1",
     "paper-shadow": "Polymer/paper-shadow#0.5.1"
   },
   "devDependencies": {
