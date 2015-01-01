@@ -3,8 +3,6 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
 
-<script src="focusable.js"></script>
-
 <!--
 Material Design: [http://www.google.com/design/spec/components/chips.html](Chips)
 
@@ -199,18 +197,19 @@ Basic chip with single letter instead of an icon
         up: 'upAction',
         blur: 'blurAction'
       },
-      downAction() {
+      downAction: function() {
         this.pressed = true;
         this.focused = true;
       },
-      upAction(e) {
+      upAction: function(e) {
+        // TODO: better way to do this?
         if (e.target != this.$.removeBtn) {
           console.log('upAction ', e.target);
           this.pressed = false;
           this.opened = !this.opened;
         }
       },
-      blurAction() {
+      blurAction: function() {
         this.pressed = false;
         this.opened = false;
         this.focused = false;
@@ -220,7 +219,7 @@ Basic chip with single letter instead of an icon
        * 
        * @event remove
        */
-      remove() {
+      remove: function() {
         var e = this.fire('remove', {}, this, false, true);
         if (!e.defaultPrevented) {
           this.parentNode.removeChild(this);
