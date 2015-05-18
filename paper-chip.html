@@ -53,18 +53,30 @@ Basic chip with single letter instead of an icon
         display: inline-block;
         vertical-align: top;
         position: relative;
-        border-radius: 16px;
         outline: none;
-        background: #EBEBEB;
         font-size: 14px;
-        color: #989898;
         cursor: default;
         margin: 8px 0;
       }
+      :host *,
+      :host /deep/ *,
+      :host ::content * {
+        transition: 200ms ease-in;
+      }
       #main {
+        overflow: hidden;
+        border-radius: 16px;
+      }
+      #main {
+        background: #EBEBEB;
         position: relative;
+        color: #989898;
+      }
+      #main #label ::content {
+        color: #989898;
       }
       #chip {
+        box-sizing: border-box;
         height: 32px;
       }
       paper-shadow {
@@ -74,7 +86,7 @@ Basic chip with single letter instead of an icon
         width: 32px;
         height: 32px;
         overflow: hidden;
-        border-radius: 16px;
+        border-radius: 100%;
         text-align: center;
         font-size: 16px;
         font-weight: bold;
@@ -82,6 +94,9 @@ Basic chip with single letter instead of an icon
         color: #EBEBEB;
         line-height: 32px;
         margin-right: 8px;
+      }
+      #icon ::content * {
+        font-size: 16px;
       }
       #icon ::content core-icon.icon,
       #icon ::content core-icon.icon svg {
@@ -99,22 +114,46 @@ Basic chip with single letter instead of an icon
         margin: 0;
         font-weight: normal;
         font-size: 14px;
+        color: #989898;
+      }
+      #removeBtn {
+        padding: 0;
+      }
+      #removeBtn /deep/ core-icon {
+        padding: 0;
+        margin: 0;
+        width: 20px;
+        height: 20px;
+        margin-left: 20px;
+        color: #00b8d4;
+        background: #fff;
+        border-radius: 100%;
+      }
+      /* initially hidden elements */
+      :host(:not([opened])) #label ::content h2 {
+        font-size: 0;
+      }
+      :host(:not([opened])) #removeBtn /deep/ core-icon {
+        width: 0;
+        height: 0;
+        margin: 0;
+      }
+      :host([opened]) #main #label ::content h1,
+      :host([opened]) #main #label ::content h2 {
+        color: #fff;
       }
       :host([opened]) #main {
         border-radius: 0;
       }
       :host([opened]) #chip {
-        box-sizing: border-box;
         padding: 16px 12px;
-        color: #FFF;
         background: #00B8D4;
         height: 72px;
       }
       :host([opened]) paper-shadow {
         border-radius: 0; 
       }
-      :host([opened]) #icon {
-        border-radius: 20px;
+      :host([opened]) #icon ::content * {
         font-size: 20px;
       }
       :host([opened]) #icon,
@@ -126,17 +165,6 @@ Basic chip with single letter instead of an icon
       :host([opened]) #label ::content h1 {
         font-size: 16px;
       }
-      :host([opened]) #removeBtn /deep/ core-icon {
-        padding: 0;
-        margin: 0;
-        width: 20px;
-        height: 20px;
-        margin-left: 20px;
-        color: #00b8d4;
-        background: #fff;
-        border-radius: 10px;
-      }
-      :host([opened]) #removeBtn /deep/ core-icon svg {
     </style>
     <div id="main" layout vertical>
       <template if="{{focused || opened}}">
@@ -148,18 +176,16 @@ Basic chip with single letter instead of an icon
         </div>
         <div id="label" flex self-center>
           <content select="h1"></content>
-          <template if="{{opened}}">
-            <content select="h2"></content>
-          </template>
+          <content select="h2"></content>
         </div>
-        <template if="{{opened && removable}}">
+        <template if="{{removable}}">
           <div self-center>
             <paper-icon-button id="removeBtn" icon="close" on-up="{{upAction}}" on-tap="{{remove}}"></paper-icon-button>
           </div>
         </template>
       </div>
       <template if="{{opened}}">
-        <div flex><content></content></div>
+        <div flex id="content"><content></content></div>
       </template>
     </div>
   </template>
@@ -206,7 +232,7 @@ Basic chip with single letter instead of an icon
         if (e.target != this.$.removeBtn) {
           console.log('upAction ', e.target);
           this.pressed = false;
-          this.opened = !this.opened;
+          this.toggleOpened();
         }
       },
       blurAction: function() {
@@ -224,6 +250,9 @@ Basic chip with single letter instead of an icon
         if (!e.defaultPrevented) {
           this.parentNode.removeChild(this);
         }
+      },
+      toggleOpened: function() {
+        this.opened = !this.opened;
       },
     }, Polymer.CoreFocusable));
   </script>
