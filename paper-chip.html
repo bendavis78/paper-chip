@@ -70,10 +70,9 @@ Basic chip with single letter instead of an icon
       #main {
         background: #EBEBEB;
         position: relative;
-        color: #989898;
       }
-      #main #label ::content {
-        color: #989898;
+      #main, ::content {
+        color: #757575;
       }
       #chip {
         box-sizing: border-box;
@@ -91,9 +90,9 @@ Basic chip with single letter instead of an icon
         font-size: 16px;
         font-weight: bold;
         background: #989898;
-        color: #EBEBEB;
         line-height: 32px;
         margin-right: 8px;
+        color: #fff;
       }
       #icon ::content * {
         font-size: 16px;
@@ -111,44 +110,62 @@ Basic chip with single letter instead of an icon
       }
       #label ::content h1,
       #label ::content h2 {
+        color: #757575;
         margin: 0;
         font-weight: normal;
         font-size: 14px;
-        color: #989898;
       }
       #removeBtn {
         padding: 0;
       }
-      #removeBtn /deep/ core-icon {
+      #removeBtn {
+        background: #bbbbbb;
+        color: #fff;
         padding: 0;
         margin: 0;
         width: 20px;
         height: 20px;
         margin-left: 20px;
-        color: #00b8d4;
-        background: #fff;
         border-radius: 100%;
       }
+      #removeBtn /deep/ core-icon {
+        width: 16px;
+        height: 16px;
+        margin: 2px;
+      }
+
+      /* pressed state */
+      :host([pressed]) #main {
+        background: #d6d6d6;
+      }
+
       /* initially hidden elements */
       :host(:not([opened])) #label ::content h2 {
         font-size: 0;
       }
+      :host(:not([opened])) #removeBtn,
       :host(:not([opened])) #removeBtn /deep/ core-icon {
         width: 0;
         height: 0;
         margin: 0;
       }
-      :host([opened]) #main #label ::content h1,
-      :host([opened]) #main #label ::content h2 {
-        color: #fff;
+      :host(:not([opened])) #content {
+        width: 0;
+        height: 0;
+        overflow: hidden;
       }
+
+      /* opened state */
       :host([opened]) #main, :host([opened]) #chip {
         border-radius: 0;
       }
       :host([opened]) #chip {
         padding: 16px 12px;
-        background: #00B8D4;
+        background: #fff;
         height: 72px;
+      }
+      :host([opened]) #label ::content h1 {
+        color: #000;
       }
       :host([opened]) paper-shadow {
         border-radius: 0; 
@@ -165,12 +182,32 @@ Basic chip with single letter instead of an icon
       :host([opened]) #label ::content h1 {
         font-size: 16px;
       }
+      :host([opened]) #content {
+        width: auto;
+        height: auto;
+      }
+
+      /* open + active state */
+      :host([opened][active]) #chip,
+      :host([opened][active]) ::content {
+        background: #00b8d4;
+        color: #fff;
+      }
+      :host([opened][active]) #removeBtn {
+        color: #00b8d4;
+        background: #fff;
+      }
+      :host([opened][active]) #chip #label ::content h1 {
+        color: #fff;
+      }
+      :host([opened][active]) #chip #label ::content h2 {
+        color: rgba(255, 255, 255, .8);
+      }
+
     </style>
     <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{ toggleOpened }}"></core-a11y-keys>
     <div id="main" layout vertical>
-      <template if="{{focused || opened}}">
-        <paper-shadow id="shadow" fit animated></paper-shadow>
-      </template>
+      <paper-shadow z="0" id="shadow" fit animated></paper-shadow>
       <div id="chip" layout horizontal center>
         <div id="icon" layout horizontal center center-justified>
           <content select=".icon"></content>
@@ -185,9 +222,7 @@ Basic chip with single letter instead of an icon
           </div>
         </template>
       </div>
-      <template if="{{opened}}">
-        <div flex id="content"><content></content></div>
-      </template>
+      <div flex id="content"><content></content></div>
     </div>
   </template>
 
@@ -195,7 +230,7 @@ Basic chip with single letter instead of an icon
     Polymer(Polymer.mixin2({
       publish: {
         /**
-         * Whether or not the chip is removable. If true, a remove button will
+         * Whether or not the chip is removable. If `true`, a remove button will
          * be shown.
          * 
          * @attribute removable
@@ -208,13 +243,26 @@ Basic chip with single letter instead of an icon
         },
 
         /**
-         * Whether or not the chip is in its opened state
+         * Whether or not the chip is in its opened state.
          * 
          * @attribute opened
          * @type boolean
          * @default false
          */
         opened: {
+          value: false,
+          reflect: true
+        },
+
+        /**
+         * Whether or not the chip state is "active". If `true`, the main chip
+         * area will be highlighted when in the opened state.
+         *
+         * @attribute active
+         * @type boolean
+         * @default false
+         */
+        active: {
           value: false,
           reflect: true
         }
@@ -238,8 +286,19 @@ Basic chip with single letter instead of an icon
       },
       blurAction: function() {
         this.pressed = false;
-        this.opened = false;
         this.focused = false;
+        this.opened = false;
+      },
+      openedChanged: function() {
+        if (this.opened) {
+          this.$.shadow.setZ(2);
+        }
+        this.focusedChanged();
+      },
+      focusedChanged: function() {
+        if (!this.opened) {
+          this.$.shadow.setZ(this.focused ? 1 : 0);
+        }
       },
       /**
        * Fired before the element is removed. This event is cancelable.
