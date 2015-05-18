@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-a11y-keys/core-a11y-keys.html">
 <link rel="import" href="../core-focusable/core-focusable.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-shadow/paper-shadow.html">
@@ -63,8 +64,7 @@ Basic chip with single letter instead of an icon
       :host ::content * {
         transition: 200ms ease-in;
       }
-      #main {
-        overflow: hidden;
+      #main, #chip {
         border-radius: 16px;
       }
       #main {
@@ -142,7 +142,7 @@ Basic chip with single letter instead of an icon
       :host([opened]) #main #label ::content h2 {
         color: #fff;
       }
-      :host([opened]) #main {
+      :host([opened]) #main, :host([opened]) #chip {
         border-radius: 0;
       }
       :host([opened]) #chip {
@@ -166,6 +166,7 @@ Basic chip with single letter instead of an icon
         font-size: 16px;
       }
     </style>
+    <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{ toggleOpened }}"></core-a11y-keys>
     <div id="main" layout vertical>
       <template if="{{focused || opened}}">
         <paper-shadow id="shadow" fit animated></paper-shadow>
@@ -253,7 +254,7 @@ Basic chip with single letter instead of an icon
       },
       toggleOpened: function() {
         this.opened = !this.opened;
-      },
+      }
     }, Polymer.CoreFocusable));
   </script>
 
