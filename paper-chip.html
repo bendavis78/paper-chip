@@ -59,9 +59,9 @@ Basic chip with single letter instead of an icon
         cursor: default;
         margin: 8px 0;
       }
-      :host *,
-      :host /deep/ *,
-      :host ::content * {
+      :host([animated]) *,
+      :host([animated]) /deep/ *,
+      :host([animated]) ::content * {
         transition: 200ms ease-in;
       }
       #main, #chip {
@@ -133,7 +133,6 @@ Basic chip with single letter instead of an icon
         height: 16px;
         margin: 2px;
       }
-
       /* pressed state */
       :host([pressed]) #main {
         background: #d6d6d6;
@@ -152,6 +151,7 @@ Basic chip with single letter instead of an icon
       :host(:not([opened])) #content {
         width: 0;
         height: 0;
+        min-width: 100%;
         overflow: hidden;
       }
 
@@ -159,10 +159,19 @@ Basic chip with single letter instead of an icon
       :host([opened]) #main, :host([opened]) #chip {
         border-radius: 0;
       }
+      :host([opened]) #content {
+        height: auto;
+        width: auto;
+        min-width: 100%;
+        overflow: hidden;
+      }
       :host([opened]) #chip {
+        height: 72px;
+      }
+      :host([opened]) #chip,
+      :host([opened]) #content ::content > * {
         padding: 16px 12px;
         background: #fff;
-        height: 72px;
       }
       :host([opened]) #label ::content h1 {
         color: #000;
@@ -182,10 +191,6 @@ Basic chip with single letter instead of an icon
       :host([opened]) #label ::content h1 {
         font-size: 16px;
       }
-      :host([opened]) #content {
-        width: auto;
-        height: auto;
-      }
 
       /* open + active state */
       :host([opened][active]) #chip,
@@ -203,11 +208,10 @@ Basic chip with single letter instead of an icon
       :host([opened][active]) #chip #label ::content h2 {
         color: rgba(255, 255, 255, .8);
       }
-
     </style>
     <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{ toggleOpened }}"></core-a11y-keys>
+    <paper-shadow z="0" id="shadow" fit animated></paper-shadow>
     <div id="main" layout vertical>
-      <paper-shadow z="0" id="shadow" fit animated></paper-shadow>
       <div id="chip" layout horizontal center>
         <div id="icon" layout horizontal center center-justified>
           <content select=".icon"></content>
@@ -222,7 +226,9 @@ Basic chip with single letter instead of an icon
           </div>
         </template>
       </div>
-      <div flex id="content"><content></content></div>
+      <div flex one id="content">
+        <content></content>
+      </div>
     </div>
   </template>
 
@@ -238,6 +244,19 @@ Basic chip with single letter instead of an icon
          * @default false
          */
         removable: {
+          value: false,
+          reflect: true
+        },
+
+        /**
+         * Whether or not the chip uses an animated transition between opened and
+         * closed states
+         *
+         * @attribute animated
+         * @type boolean
+         * @default true
+         */
+        animated: {
           value: false,
           reflect: true
         },
@@ -272,6 +291,9 @@ Basic chip with single letter instead of an icon
         up: 'upAction',
         blur: 'blurAction'
       },
+      ready: function() {
+        this._initialWidth = this.offestWidth;
+      },
       downAction: function() {
         this.pressed = true;
         this.focused = true;
@@ -279,7 +301,6 @@ Basic chip with single letter instead of an icon
       upAction: function(e) {
         // TODO: better way to do this?
         if (e.target != this.$.removeBtn) {
-          console.log('upAction ', e.target);
           this.pressed = false;
           this.toggleOpened();
         }
@@ -287,7 +308,9 @@ Basic chip with single letter instead of an icon
       blurAction: function() {
         this.pressed = false;
         this.focused = false;
-        this.opened = false;
+        if (this.opened) {
+          this.toggleOpened();
+        }
       },
       openedChanged: function() {
         if (this.opened) {
@@ -312,8 +335,32 @@ Basic chip with single letter instead of an icon
         }
       },
       toggleOpened: function() {
+        if (!this.animated) {
+          this.opened = !this.opened;
+          return;
+        }
+        var $content, width, height;
+        $content = this.$.content;
+        width = height = '';
+        if (!this.opened) {
+          // temporarily disable transitions in order to take measurements of
+          // the content area to allow for a proper css transision.
+          this.animated = false;
+          this.opened = true;
+          width = $content.offsetWidth + 'px';
+          height = $content.offsetHeight + 'px';
+          this.opened = false;
+          this._forceReflow();
+          this.animated = true;
+        }
+        $content.style.width = width;
+        $content.style.height = height;
         this.opened = !this.opened;
+      },
+      _forceReflow: function() {
+        return this.offsetHeight;
       }
+
     }, Polymer.CoreFocusable));
   </script>
 

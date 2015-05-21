@@ -34,26 +34,46 @@
     .settings > div {
       margin: 1em 0; 
     }
+    address {
+      font-style: normal;
+    }
   </style>
 
 </head>
 <body unresolved>
   <section>
     <p>Removable chip with <code>core-icon</code> and a secondary label:</p>
-    <paper-chip removable>
+    <paper-chip removable animated>
       <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
       <h1>John Doe</h1>
-      <h2>jdoe@example.com</h2>
+      <h2>doeboy@example.com</h2>
     </paper-chip>
     <paper-toast id="toast1" text="John Doe was removed!"></paper-toast>
-  </p>
+  </section>
+
   <section>
-    <p>Basic chip with single letter instead of an icon:</p>
-    <paper-chip label="Jane Doe">
-      <div class="icon" flex>J</div>
-      <h1>jdoe@example.com</h1>
+    <p>Chip with extra content:</p>
+    <paper-chip removable animated>
+      <core-icon class="icon" icon="avatars:avatar-13"></core-icon>
+      <h1>Jane Doe</h1>
+      <h2>janedoe@example.com</h2>
+      <address>
+        123 Avenue Way<br>
+        Anytown, USA 12345<br>
+        <br>
+        555-123-4567
+      </address>
     </paper-chip>
   </section>
+
+  <section>
+    <p>Basic chip with single letter instead of an icon:</p>
+    <paper-chip label="Peter Parker" animated>
+      <div class="icon" flex>P</div>
+      <h1>pete@dailybugle.com</h1>
+    </paper-chip>
+  </section>
+
 </body>
 <script>
   var $ = document.querySelector.bind(document);
