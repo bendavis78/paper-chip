@@ -84,21 +84,19 @@ Basic chip with single letter instead of an icon
       paper-shadow {
         border-radius: 16px;
       }
-      #icon {
+      #icon ::content .icon {
+        margin-right: -4px;
         width: 32px;
         height: 32px;
-        overflow: hidden;
+        line-height: 32px;
         border-radius: 100%;
+        overflow: hidden;
         text-align: center;
+        vertical-align: middle;
         font-size: 16px;
         font-weight: bold;
         background: #989898;
-        line-height: 32px;
-        margin-right: 8px;
         color: #fff;
-      }
-      #icon ::content * {
-        font-size: 16px;
       }
       #icon ::content core-icon.icon,
       #icon ::content core-icon.icon svg {
@@ -109,7 +107,7 @@ Basic chip with single letter instead of an icon
         vertical-align: bottom;
       }
       #label {
-        padding-right: 12px;
+        padding: 0 12px;
       }
       #label ::content h1,
       #label ::content h2 {
@@ -182,14 +180,12 @@ Basic chip with single letter instead of an icon
       :host([opened]) paper-shadow {
         border-radius: 0; 
       }
-      :host([opened]) #icon ::content * {
-        font-size: 20px;
-      }
-      :host([opened]) #icon,
-      :host([opened]) #icon ::content core-icon.icon,
+      :host([opened]) #icon ::content .icon,
       :host([opened]) #icon ::content core-icon.icon svg {
+        font-size: 20px;
         width: 40px;
         height: 40px;
+        line-height: 40px;
       }
       :host([opened]) #label ::content h1 {
         font-size: 16px;
@@ -212,8 +208,8 @@ Basic chip with single letter instead of an icon
         color: rgba(255, 255, 255, .8);
       }
     </style>
-    <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{ toggleOpened }}"></core-a11y-keys>
-    <paper-shadow z="0" id="shadow" animated>
+    <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{toggleOpened}}"></core-a11y-keys>
+    <paper-shadow z="0" id="shadow" animated?="{{animated}}">
       <div id="main" layout vertical>
         <div id="chip" layout horizontal center>
           <div id="icon" layout horizontal center center-justified>
@@ -297,6 +293,10 @@ Basic chip with single letter instead of an icon
       },
       ready: function() {
         this._initialWidth = this.offestWidth;
+        if (this.$.removeBtn) {
+          // disable tabindex on remove button so that tabindex can be used for chips
+          this.$.removeBtn.removeAttribute('tabindex');
+        }
       },
       downAction: function() {
         this.pressed = true;

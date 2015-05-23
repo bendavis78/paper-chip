@@ -43,7 +43,7 @@
 <body unresolved>
   <section>
     <p>Removable chip with <code>core-icon</code> and a secondary label:</p>
-    <paper-chip removable animated id="chip1">
+    <paper-chip removable id="chip1">
       <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
       <h1>John Doe</h1>
       <h2>doeboy@example.com</h2>
@@ -52,7 +52,17 @@
   </section>
 
   <section>
-    <p>Chip with extra content:</p>
+    <p>Same chip, with animated transition:</p>
+    <paper-chip removable animated id="chip1a">
+      <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
+      <h1>John Doe</h1>
+      <h2>doeboy@example.com</h2>
+    </paper-chip>
+    <paper-toast id="toast1" text="John Doe was removed!"></paper-toast>
+  </section>
+
+  <section>
+    <p>Animated chip with more content:</p>
     <paper-chip animated id="chip2">
       <core-icon class="icon" icon="avatars:avatar-13"></core-icon>
       <h1>Jane Doe</h1>
@@ -68,8 +78,16 @@
 
   <section>
     <p>Basic chip with single letter instead of an icon:</p>
-    <paper-chip animated id="chip3">
+    <paper-chip id="chip3">
       <div class="icon" flex>P</div>
+      <h1>Peter Parker</h1>
+      <h2>pete@dailybugle.com</h2>
+    </paper-chip>
+  </section>
+
+  <section>
+    <p>Basic chip with no icon</p>
+    <paper-chip id="chip3">
       <h1>Peter Parker</h1>
       <h2>pete@dailybugle.com</h2>
     </paper-chip>
@@ -85,6 +103,7 @@
   var chips = $$('paper-chip');
   for (var i=0; i<chips.length; i++) {
     chips[i].style.zIndex = chips.length - i;
+    chips[i].setAttribute('tabindex', i+1);
   }
 </script>
 </html>
