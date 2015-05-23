@@ -213,26 +213,27 @@ Basic chip with single letter instead of an icon
       }
     </style>
     <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{ toggleOpened }}"></core-a11y-keys>
-    <div id="main" layout vertical>
-      <paper-shadow z="0" id="shadow" fit animated></paper-shadow>
-      <div id="chip" layout horizontal center>
-        <div id="icon" layout horizontal center center-justified>
-          <content select=".icon"></content>
-        </div>
-        <div id="label" flex self-center>
-          <content select="h1"></content>
-          <content select="h2"></content>
-        </div>
-        <template if="{{removable}}">
-          <div self-center>
-            <paper-icon-button id="removeBtn" icon="close" on-up="{{upAction}}" on-tap="{{remove}}"></paper-icon-button>
+    <paper-shadow z="0" id="shadow" animated>
+      <div id="main" layout vertical>
+        <div id="chip" layout horizontal center>
+          <div id="icon" layout horizontal center center-justified>
+            <content select=".icon"></content>
           </div>
-        </template>
+          <div id="label" flex self-center>
+            <content select="h1"></content>
+            <content select="h2"></content>
+          </div>
+          <template if="{{removable}}">
+            <div self-center>
+              <paper-icon-button id="removeBtn" icon="close" on-tap="{{remove}}"></paper-icon-button>
+            </div>
+          </template>
+        </div>
+        <div flex one id="content">
+          <content></content>
+        </div>
       </div>
-      <div flex one id="content">
-        <content></content>
-      </div>
-    </div>
+    </paper-shadow>
   </template>
 
   <script>
@@ -302,11 +303,8 @@ Basic chip with single letter instead of an icon
         this.focused = true;
       },
       upAction: function(e) {
-        // TODO: better way to do this?
-        if (e.target != this.$.removeBtn) {
-          this.pressed = false;
-          this.toggleOpened();
-        }
+        this.pressed = false;
+        this.toggleOpened();
       },
       blurAction: function() {
         this.pressed = false;

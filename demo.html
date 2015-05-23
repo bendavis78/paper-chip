@@ -43,7 +43,7 @@
 <body unresolved>
   <section>
     <p>Removable chip with <code>core-icon</code> and a secondary label:</p>
-    <paper-chip removable animated>
+    <paper-chip removable animated id="chip1">
       <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
       <h1>John Doe</h1>
       <h2>doeboy@example.com</h2>
@@ -53,7 +53,7 @@
 
   <section>
     <p>Chip with extra content:</p>
-    <paper-chip removable animated>
+    <paper-chip animated id="chip2">
       <core-icon class="icon" icon="avatars:avatar-13"></core-icon>
       <h1>Jane Doe</h1>
       <h2>janedoe@example.com</h2>
@@ -68,17 +68,23 @@
 
   <section>
     <p>Basic chip with single letter instead of an icon:</p>
-    <paper-chip label="Peter Parker" animated>
+    <paper-chip animated id="chip3">
       <div class="icon" flex>P</div>
-      <h1>pete@dailybugle.com</h1>
+      <h1>Peter Parker</h1>
+      <h2>pete@dailybugle.com</h2>
     </paper-chip>
   </section>
 
 </body>
 <script>
   var $ = document.querySelector.bind(document);
-  $('paper-chip').addEventListener('remove', function(event) {
+  var $$ = document.querySelectorAll.bind(document);
+  document.querySelector('#chip1').addEventListener('remove', function(event) {
     $('#toast1').show();
   });
+  var chips = $$('paper-chip');
+  for (var i=0; i<chips.length; i++) {
+    chips[i].style.zIndex = chips.length - i;
+  }
 </script>
 </html>
