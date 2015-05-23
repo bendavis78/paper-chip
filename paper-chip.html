@@ -309,15 +309,7 @@ Basic chip with single letter instead of an icon
       blurAction: function() {
         this.pressed = false;
         this.focused = false;
-        if (this.opened) {
-          this.toggleOpened();
-        }
-      },
-      openedChanged: function() {
-        if (this.opened) {
-          this.$.shadow.setZ(2);
-        }
-        this.focusedChanged();
+        this.opened = false;
       },
       focusedChanged: function() {
         if (!this.opened) {
@@ -336,14 +328,20 @@ Basic chip with single letter instead of an icon
         }
       },
       toggleOpened: function() {
+        this.opened = !this.opened;
+      },
+      openedChanged: function() {
+        this.focusedChanged();
+        if (this.opened) {
+          this.$.shadow.setZ(2);
+        }
         if (!this.animated) {
-          this.opened = !this.opened;
           return;
         }
         var $content, width, height;
         $content = this.$.content;
         width = height = '';
-        if (!this.opened) {
+        if (this.opened) {
           // temporarily disable transitions in order to take measurements of
           // the content area to allow for a proper css transision.
           this.animated = false;
@@ -353,10 +351,10 @@ Basic chip with single letter instead of an icon
           this.opened = false;
           this._forceReflow();
           this.animated = true;
+          this.opened = true;
         }
         $content.style.width = width;
         $content.style.height = height;
-        this.opened = !this.opened;
       },
       _forceReflow: function() {
         return this.offsetHeight;
