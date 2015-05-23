@@ -59,6 +59,8 @@ Basic chip with single letter instead of an icon
         font-size: 14px;
         cursor: default;
         margin: 8px 0;
+        height: 32px;
+        overflow: visible;
       }
       :host([animated]) *,
       :host([animated]) /deep/ *,
@@ -211,8 +213,8 @@ Basic chip with single letter instead of an icon
       }
     </style>
     <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{ toggleOpened }}"></core-a11y-keys>
-    <paper-shadow z="0" id="shadow" fit animated></paper-shadow>
     <div id="main" layout vertical>
+      <paper-shadow z="0" id="shadow" fit animated></paper-shadow>
       <div id="chip" layout horizontal center>
         <div id="icon" layout horizontal center center-justified>
           <content select=".icon"></content>
