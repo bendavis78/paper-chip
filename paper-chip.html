@@ -48,7 +48,7 @@ Basic chip with single letter instead of an icon
 @homepage http://bendavis78.github.io/paper-chip/paper-chip/
 @demo http://bendavis78.github.io/paper-chip/paper-chip/demo.html
 -->
-<polymer-element name="paper-chip" tabindex="0">
+<polymer-element name="paper-chip" tabindex="0" attributes="removable animated opened">
   <template>
     <style>
       :host {
@@ -111,6 +111,7 @@ Basic chip with single letter instead of an icon
       }
       #label ::content h1,
       #label ::content h2 {
+        white-space: nowrap;
         color: #757575;
         margin: 0;
         font-weight: normal;
