@@ -7,35 +7,20 @@
 
   <title>paper-chip Demo</title>
 
-  <script src="../webcomponentsjs/webcomponents.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="paper-chip.html">
-  <link rel="import" href="../font-roboto/roboto.html">
-  <link rel="import" href="../core-icon/core-icon.html">
-  <link rel="import" href="../topeka-elements/avatars.html">
-  <link rel="import" href="../paper-toast/paper-toast.html">
+  <link rel="import" href="../paper-chip.html">
+  <link rel="import" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="avatars.html">
 
 
-  <style shim-shadowdom>
+  <style is="custom-style">
     body {
-      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-      font-size: 14px;
-      margin: 0;
-      padding: 24px;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
-      -webkit-touch-callout: none;
+      @apply(--paper-style-font-body1);
+      color: #333;
     }
     section {
-      margin: 3em 0;
-    }
-    .settings {
-      width: 200px;
-    }
-    .settings > div {
-      margin: 1em 0; 
-    }
-    address {
-      font-style: normal;
+      margin: 24px;
     }
   </style>
 
@@ -103,7 +88,7 @@
   var chips = $$('paper-chip');
   for (var i=0; i<chips.length; i++) {
     chips[i].style.zIndex = chips.length - i;
-    chips[i].setAttribute('tabindex', i+1);
+    chips[i].setAttribute('tabindex', i + 1);
   }
 </script>
 </html>

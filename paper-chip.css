@@ -1,0 +1,181 @@
+:root {
+  --paper-chip-bg-opened: var(--primary-background-color);
+  --paper-chip-color-opened: var(--text-primary-color);
+  --paper-chip-bg-closed: var(--divider-color);
+  --paper-chip-icon-bg: var(--default-primary-color);
+  --paper-chip-icon-color: var(--text-primary-color);
+}
+:host {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  outline: none;
+  font-size: 14px;
+  cursor: default;
+  margin: 8px 0;
+  height: 32px;
+  overflow: visible;
+}
+:host([animated]) *,
+:host([animated]) /deep/ *,
+:host([animated]) ::content * {
+  transition: 200ms ease-in;
+}
+#main, #chip {
+  border-radius: 16px;
+}
+#main {
+  background: var(--paper-chip-bg-closed);
+  position: relative;
+  @apply(--layout-vertical);
+}
+#main, ::content {
+  color: var(--secondary-text-color);
+}
+#chip {
+  box-sizing: border-box;
+  height: 32px;
+  @apply(--layout-horizontal);
+  @apply(--layout-center);
+}
+paper-shadow {
+  border-radius: 16px;
+}
+#icon {
+  @apply(--layout-horizontal);
+  @apply(--layout-center);
+  @apply(--layout-center-justified);
+}
+#icon ::content .icon {
+  margin-right: -4px;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 100%;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  font-weight: bold;
+  background: var(--paper-chip-icon-bg);
+  color: #fff;
+}
+#icon ::content core-icon.icon,
+#icon ::content core-icon.icon svg {
+  width: 32px;
+  height: 32px;
+}
+#icon ::content core-icon.icon {
+  vertical-align: bottom;
+}
+#label {
+  padding: 0 12px;
+  @apply(--layout-flex-auto);
+  @apply(--layout-self-center);
+}
+#label ::content h1,
+#label ::content h2 {
+  white-space: nowrap;
+  color: #757575;
+  margin: 0;
+  font-weight: normal;
+  font-size: 14px;
+}
+.icon-btn-wrapper {
+  @apply(--layout-self-center);
+}
+#removeBtn {
+  padding: 0;
+}
+#removeBtn {
+  background: #bbbbbb;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
+  border-radius: 100%;
+}
+#removeBtn /deep/ core-icon {
+  width: 16px;
+  height: 16px;
+  margin: 2px;
+}
+#content {
+  @apply(--layout-flex);
+}
+/* pressed state */
+:host([pressed]) #main {
+  background: #d6d6d6;
+}
+
+/* initially hidden elements */
+:host(:not([opened])) #label ::content h2 {
+  font-size: 0;
+}
+:host(:not([opened])) #removeBtn,
+:host(:not([opened])) #removeBtn /deep/ core-icon {
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+:host(:not([opened])) #content {
+  width: 0;
+  height: 0;
+  min-width: 100%;
+  overflow: hidden;
+}
+
+/* opened state */
+:host([opened]) #main, :host([opened]) #chip {
+  border-radius: 0;
+}
+:host([opened]) #content {
+  height: auto;
+  width: auto;
+  min-width: 100%;
+  overflow: hidden;
+}
+:host([opened]) #chip {
+  height: 72px;
+}
+:host([opened]) #chip,
+:host([opened]) #content ::content > * {
+  padding: 16px 12px;
+  background: #fff;
+}
+:host([opened]) #label ::content h1 {
+  color: #000;
+}
+:host([opened]) paper-shadow {
+  border-radius: 0; 
+}
+:host([opened]) #icon ::content .icon,
+:host([opened]) #icon ::content core-icon.icon svg {
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+}
+:host([opened]) #label ::content h1 {
+  font-size: 16px;
+}
+
+/* open + active state */
+:host([opened][active]) #chip,
+:host([opened][active]) ::content {
+  background: #00b8d4;
+  color: #fff;
+}
+:host([opened][active]) #removeBtn {
+  color: #00b8d4;
+  background: #fff;
+}
+:host([opened][active]) #chip #label ::content h1 {
+  color: #fff;
+}
+:host([opened][active]) #chip #label ::content h2 {
+  color: rgba(255, 255, 255, .8);
+}
+    
