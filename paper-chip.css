@@ -86,8 +86,8 @@ paper-material {
   padding: 0;
 }
 #removeBtn {
-  background-color: var(--paper-chip-removebtn-bg, --paper-grey-200);
-  color: var(--paper-chip-removebtn-text, #fff);
+  background-color: var(--paper-chip-removebtn-background-color, --paper-grey-400);
+  color: var(--paper-chip-removebtn-icon-color, --text-primary-color);
   padding: 0;
   margin: 0;
   width: 20px;
@@ -102,11 +102,12 @@ paper-material {
 }
 /* pressed state */
 :host([pressed]) #main {
-  background-color: var(--paper-chip-pressed-background, --paper-grey-300);
+  background-color: var(--paper-chip-pressed-background-color, --paper-grey-300);
 }
 
 /* initially hidden elements */
 :host(:not([opened])) #label ::content h2 {
+  color: var(--paper-chip-secondary-text-color, --secondary-text-color);
   font-size: 0;
   height: 0;
 }
@@ -121,6 +122,9 @@ paper-material {
   height: 0;
   min-width: 100%;
   overflow: hidden;
+}
+:host(:not([opened])) #label ::content h1 {
+  color: var(--paper-chip-secondary-text-color, --secondary-text-color);
 }
 
 /* opened state */
@@ -139,10 +143,10 @@ paper-material {
 :host([opened]) #chip,
 :host([opened]) #content ::content > * {
   padding: 16px 12px;
-  background-color: var(--paper-chip-opened-bg, --paper-grey-50);
+  background-color: var(--paper-chip-opened-background-color, --paper-grey-50);
 }
 :host([opened]) #label ::content h1 {
-  color: var(--primary-text-color);
+  color: var(--paper-chip-primary-text-color, --primary-text-color);
   font-size: 16px;
 }
 :host([opened]) paper-material {
@@ -155,23 +159,21 @@ paper-material {
   height: 40px;
   line-height: 40px;
 }
-:host([opened]) #label ::content h1 {
-}
 
 /* open + active state */
 :host([opened][active]) #chip,
 :host([opened][active]) ::content {
-  background-color: #00b8d4;
-  color: #fff;
+  background-color: var(--paper-chip-active-color, --accent-color);
+  color: var(--paper-chip-active-text-color, --text-primary-color);
 }
 :host([opened][active]) #removeBtn {
-  color: #00b8d4;
-  background-color: #fff;
+  color: var(--paper-chip-active-color, --accent-color);
+  background-color: var(--paper-chip-active-text-color, --text-primary-color);
 }
 :host([opened][active]) #chip #label ::content h1 {
-  color: #fff;
+  color: var(--paper-chip-active-text-color, --text-primary-color);
 }
 :host([opened][active]) #chip #label ::content h2 {
-  color: rgba(255, 255, 255, .8);
+  color: var(--paper-chip-active-secondary-text-color, --text-primary-color);
 }
     

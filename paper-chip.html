@@ -1,8 +1,9 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-behaviors/iron-button-state.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-styles/paper-styles.html">
 
@@ -64,11 +65,9 @@ Basic chip with single letter instead of an icon
             <content select="h1"></content>
             <content select="h2"></content>
           </div>
-          <template if="{{removable}}">
-            <div class="remove-btn-wrapper">
-              <paper-icon-button id="removeBtn" icon="close" on-tap="remove"></paper-icon-button>
-            </div>
-          </template>
+          <div class="remove-btn-wrapper">
+            <paper-icon-button id="removeBtn" icon="close" on-tap="remove"></paper-icon-button>
+          </div>
         </div>
         <div id="content">
           <content></content>
