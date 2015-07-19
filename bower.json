@@ -1,6 +1,6 @@
 {
   "name": "paper-chip",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "authors": [
     "Ben Davis <bendavis78@gmail.com>"
   ],
@@ -14,21 +14,22 @@
   ],
   "main": "paper-chip.html",
   "license": "MIT",
-  "homepage": "http://bendavis78.github.io/paper-chip/components/paper-chip/index.html",
+  "homepage": "http://bendavis78.github.io/paper-chip/",
   "ignore": [
     "/.*",
     "/tests/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#0.5.1",
-    "webcomponents": "Polymer/webcomponentsjs#0.5.1",
-    "core-focusable": "Polymer/core-focusable#0.5.1",
-    "paper-icon-button": "Polymer/paper-icon-button#0.5.1",
-    "paper-shadow": "Polymer/paper-shadow#0.5.1"
+    "polymer": "Polymer/polymer#^1.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^1.0.0",
+    "paper-material": "PolymerElements/paper-material#^1.0.0",
+    "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^1.0.0"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^0.7.3",
-    "paper-toast": "Polymer/paper-toast#0.5.1",
-    "topeka-elements": "Polymer/topeka-elements"
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
+    "paper-toast": "PolymerElements/paper-toast#^1.0.0"
   }
 }

@@ -1,8 +1,11 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../core-a11y-keys/core-a11y-keys.html">
-<link rel="import" href="../core-focusable/core-focusable.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../iron-behaviors/iron-button-state.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
 
 <!--
 Material Design: [Chips](http://www.google.com/design/spec/components/chips.html)
@@ -17,7 +20,7 @@ The following child elements may be placed within the chip tag define its
 content:
 
   * .icon: The icon representing the chip. This may be any element, for
-            example, a `<core-icon>` or a simple `<span>` with a single letter
+            example, a `<iron-icon>` or a simple `<span>` with a single letter
   * h1: The chip label, shown in both closed and opened states
   * h2: A secondary label, shown only in the opened state
 
@@ -26,10 +29,10 @@ from the DOM.
 
 ## Examples:
 
-Removable chip with core-icon
+Removable chip with iron-icon
 
     <paper-chip removable>
-      <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
+      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
       <h1>John Doe</h1>
       <h2>jdoe@example.com</h2>
     </paper-chip>
@@ -37,205 +40,47 @@ Removable chip with core-icon
 Basic chip with single letter instead of an icon
 
     <paper-chip label="Jane Doe">
-      <div class="icon" flex>J</div>
+      <div class="icon">J</div>
       <h1>jdoe@example.com</h1>
     </paper-chip>
 
 
 @element paper-chip
 @blurb A basic "chip" element representing an icon/image and a short piece of text.
-@status alpha
-@homepage http://bendavis78.github.io/paper-chip/paper-chip/
-@demo http://bendavis78.github.io/paper-chip/paper-chip/demo.html
+@homepage http://bendavis78.github.io/paper-chip/
+@demo demo/index.html
 -->
-<polymer-element name="paper-chip" tabindex="0" attributes="removable animated opened">
+<dom-module id="paper-chip">
+  <link rel="import" type="css" href="paper-chip.css">
   <template>
-    <style>
-      :host {
-        display: inline-block;
-        vertical-align: top;
-        position: relative;
-        outline: none;
-        font-size: 14px;
-        cursor: default;
-        margin: 8px 0;
-        height: 32px;
-        overflow: visible;
-      }
-      :host([animated]) *,
-      :host([animated]) /deep/ *,
-      :host([animated]) ::content * {
-        transition: 200ms ease-in;
-      }
-      #main, #chip {
-        border-radius: 16px;
-      }
-      #main {
-        background: #EBEBEB;
-        position: relative;
-      }
-      #main, ::content {
-        color: #757575;
-      }
-      #chip {
-        box-sizing: border-box;
-        height: 32px;
-      }
-      paper-shadow {
-        border-radius: 16px;
-      }
-      #icon ::content .icon {
-        margin-right: -4px;
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        border-radius: 100%;
-        overflow: hidden;
-        text-align: center;
-        vertical-align: middle;
-        font-size: 16px;
-        font-weight: bold;
-        background: #989898;
-        color: #fff;
-      }
-      #icon ::content core-icon.icon,
-      #icon ::content core-icon.icon svg {
-        width: 32px;
-        height: 32px;
-      }
-      #icon ::content core-icon.icon {
-        vertical-align: bottom;
-      }
-      #label {
-        padding: 0 12px;
-      }
-      #label ::content h1,
-      #label ::content h2 {
-        white-space: nowrap;
-        color: #757575;
-        margin: 0;
-        font-weight: normal;
-        font-size: 14px;
-      }
-      #removeBtn {
-        padding: 0;
-      }
-      #removeBtn {
-        background: #bbbbbb;
-        color: #fff;
-        padding: 0;
-        margin: 0;
-        width: 20px;
-        height: 20px;
-        margin-left: 20px;
-        border-radius: 100%;
-      }
-      #removeBtn /deep/ core-icon {
-        width: 16px;
-        height: 16px;
-        margin: 2px;
-      }
-      /* pressed state */
-      :host([pressed]) #main {
-        background: #d6d6d6;
-      }
-
-      /* initially hidden elements */
-      :host(:not([opened])) #label ::content h2 {
-        font-size: 0;
-      }
-      :host(:not([opened])) #removeBtn,
-      :host(:not([opened])) #removeBtn /deep/ core-icon {
-        width: 0;
-        height: 0;
-        margin: 0;
-      }
-      :host(:not([opened])) #content {
-        width: 0;
-        height: 0;
-        min-width: 100%;
-        overflow: hidden;
-      }
-
-      /* opened state */
-      :host([opened]) #main, :host([opened]) #chip {
-        border-radius: 0;
-      }
-      :host([opened]) #content {
-        height: auto;
-        width: auto;
-        min-width: 100%;
-        overflow: hidden;
-      }
-      :host([opened]) #chip {
-        height: 72px;
-      }
-      :host([opened]) #chip,
-      :host([opened]) #content ::content > * {
-        padding: 16px 12px;
-        background: #fff;
-      }
-      :host([opened]) #label ::content h1 {
-        color: #000;
-      }
-      :host([opened]) paper-shadow {
-        border-radius: 0; 
-      }
-      :host([opened]) #icon ::content .icon,
-      :host([opened]) #icon ::content core-icon.icon svg {
-        font-size: 20px;
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-      }
-      :host([opened]) #label ::content h1 {
-        font-size: 16px;
-      }
-
-      /* open + active state */
-      :host([opened][active]) #chip,
-      :host([opened][active]) ::content {
-        background: #00b8d4;
-        color: #fff;
-      }
-      :host([opened][active]) #removeBtn {
-        color: #00b8d4;
-        background: #fff;
-      }
-      :host([opened][active]) #chip #label ::content h1 {
-        color: #fff;
-      }
-      :host([opened][active]) #chip #label ::content h2 {
-        color: rgba(255, 255, 255, .8);
-      }
-    </style>
-    <core-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="{{toggleOpened}}"></core-a11y-keys>
-    <paper-shadow z="0" id="shadow" animated?="{{animated}}">
-      <div id="main" layout vertical>
-        <div id="chip" layout horizontal center>
-          <div id="icon" layout horizontal center center-justified>
+    <iron-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="toggleOpened"></iron-a11y-keys>
+    <paper-material id="shadow" elevation="{{_elevation}}" animated$="{{animated}}">
+      <div id="main">
+        <div id="chip">
+          <div id="icon">
             <content select=".icon"></content>
           </div>
-          <div id="label" flex self-center>
+          <div id="label">
             <content select="h1"></content>
             <content select="h2"></content>
           </div>
-          <template if="{{removable}}">
-            <div self-center>
-              <paper-icon-button id="removeBtn" icon="close" on-tap="{{remove}}"></paper-icon-button>
-            </div>
-          </template>
+          <paper-icon-button id="removeBtn" icon="close" on-tap="remove"></paper-icon-button>
         </div>
-        <div flex one id="content">
+        <div id="content">
           <content></content>
         </div>
       </div>
-    </paper-shadow>
+    </paper-material>
   </template>
 
   <script>
-    Polymer(Polymer.mixin2({
-      publish: {
+    Polymer({
+      is: 'paper-chip',
+      behaviors: [
+        Polymer.IronButtonState,
+        Polymer.IronControlState,
+      ],
+      properties: {
         /**
          * Whether or not the chip is removable. If `true`, a remove button will
          * be shown.
@@ -245,8 +90,9 @@ Basic chip with single letter instead of an icon
          * @default false
          */
         removable: {
+          type: Boolean,
           value: false,
-          reflect: true
+          reflectToAttribute: true
         },
 
         /**
@@ -258,8 +104,9 @@ Basic chip with single letter instead of an icon
          * @default true
          */
         animated: {
+          type: Boolean,
           value: false,
-          reflect: true
+          reflectToAttribute: true
         },
 
         /**
@@ -270,8 +117,10 @@ Basic chip with single letter instead of an icon
          * @default false
          */
         opened: {
+          type: Boolean,
           value: false,
-          reflect: true
+          reflectToAttribute: true,
+          observer: '_openedChanged'
         },
 
         /**
@@ -283,39 +132,44 @@ Basic chip with single letter instead of an icon
          * @default false
          */
         active: {
+          type: Boolean,
           value: false,
-          reflect: true
+          reflectToAttribute: true
+        },
+
+        _elevation: {
+          type: Number
         }
       },
-      eventDelegates: {
-        down: 'downAction',
-        up: 'upAction',
-        blur: 'blurAction'
+      listeners: {
+        up: '_upAction',
+        blur: '_blurAction'
       },
+      observers: [
+        '_calculateElevation(opened, focused, disabled, active, pressed)'
+      ],
+
       ready: function() {
-        this._initialWidth = this.offestWidth;
         if (this.$.removeBtn) {
           // disable tabindex on remove button so that tabindex can be used for chips
           this.$.removeBtn.removeAttribute('tabindex');
         }
       },
-      downAction: function() {
-        this.pressed = true;
-        this.focused = true;
+      _calculateElevation: function() {
+        var e = 0;
+        if (this.focused || this.pressed || this.receivedFocusFromKeyboard) {
+          e = 1;
+        }
+        if (this.opened) {
+          e = 4;
+        }
+        this._elevation = e;
       },
-      upAction: function(e) {
-        this.pressed = false;
+      _upAction: function(e) {
         this.toggleOpened();
       },
-      blurAction: function() {
-        this.pressed = false;
-        this.focused = false;
+      _blurAction: function() {
         this.opened = false;
-      },
-      focusedChanged: function() {
-        if (!this.opened) {
-          this.$.shadow.setZ(this.focused ? 1 : 0);
-        }
       },
       /**
        * Fired before the element is removed. This event is cancelable.
@@ -331,11 +185,7 @@ Basic chip with single letter instead of an icon
       toggleOpened: function() {
         this.opened = !this.opened;
       },
-      openedChanged: function() {
-        this.focusedChanged();
-        if (this.opened) {
-          this.$.shadow.setZ(2);
-        }
+      _openedChanged: function() {
         if (!this.animated) {
           return;
         }
@@ -344,15 +194,15 @@ Basic chip with single letter instead of an icon
         width = height = '';
         if (this.opened) {
           // temporarily disable transitions in order to take measurements of
-          // the content area to allow for a proper css transision.
+          // the content area, allowing for a proper css transision.
           this.animated = false;
           this.opened = true;
           width = $content.offsetWidth + 'px';
           height = $content.offsetHeight + 'px';
           this.opened = false;
           this._forceReflow();
-          this.animated = true;
           this.opened = true;
+          this.animated = true;
         }
         $content.style.width = width;
         $content.style.height = height;
@@ -360,8 +210,7 @@ Basic chip with single letter instead of an icon
       _forceReflow: function() {
         return this.offsetHeight;
       }
-
-    }, Polymer.CoreFocusable));
+    });
   </script>
 
-</polymer-element>
+</dom-module>

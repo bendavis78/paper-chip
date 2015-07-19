@@ -7,44 +7,33 @@
 
   <title>paper-chip Demo</title>
 
-  <script src="../webcomponentsjs/webcomponents.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="paper-chip.html">
-  <link rel="import" href="../font-roboto/roboto.html">
-  <link rel="import" href="../core-icon/core-icon.html">
-  <link rel="import" href="../topeka-elements/avatars.html">
-  <link rel="import" href="../paper-toast/paper-toast.html">
+  <link rel="import" href="../paper-chip.html">
+  <link rel="import" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="../../paper-toast/paper-toast.html">
+  <link rel="import" href="avatars.html">
 
 
-  <style shim-shadowdom>
+  <style is="custom-style">
     body {
-      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
-      font-size: 14px;
-      margin: 0;
-      padding: 24px;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
-      -webkit-touch-callout: none;
+      @apply(--paper-font-body1);
+      color: #333;
     }
     section {
-      margin: 3em 0;
+      margin: 24px;
     }
-    .settings {
-      width: 200px;
-    }
-    .settings > div {
-      margin: 1em 0; 
-    }
-    address {
-      font-style: normal;
+    #chip3 .icon {
+      background-color: var(--default-primary-color);
     }
   </style>
 
 </head>
 <body unresolved>
   <section>
-    <p>Removable chip with <code>core-icon</code> and a secondary label:</p>
-    <paper-chip removable id="chip1">
-      <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
+    <p>Removable chip with <code>iron-icon</code> and a secondary label:</p>
+    <paper-chip removable id="chip1" active>
+      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
       <h1>John Doe</h1>
       <h2>doeboy@example.com</h2>
     </paper-chip>
@@ -54,17 +43,17 @@
   <section>
     <p>Same chip, with animated transition:</p>
     <paper-chip removable animated id="chip1a">
-      <core-icon class="icon" icon="avatars:avatar-1"></core-icon>
+      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
       <h1>John Doe</h1>
       <h2>doeboy@example.com</h2>
     </paper-chip>
-    <paper-toast id="toast1" text="John Doe was removed!"></paper-toast>
+    <paper-toast text="John Doe was removed!"></paper-toast>
   </section>
 
   <section>
     <p>Animated chip with more content:</p>
-    <paper-chip animated id="chip2">
-      <core-icon class="icon" icon="avatars:avatar-13"></core-icon>
+    <paper-chip removable animated id="chip2">
+      <iron-icon class="icon" icon="avatars:avatar-13"></iron-icon>
       <h1>Jane Doe</h1>
       <h2>janedoe@example.com</h2>
       <address>
@@ -79,7 +68,7 @@
   <section>
     <p>Basic chip with single letter instead of an icon:</p>
     <paper-chip id="chip3">
-      <div class="icon" flex>P</div>
+      <div class="icon">P</div>
       <h1>Peter Parker</h1>
       <h2>pete@dailybugle.com</h2>
     </paper-chip>
@@ -97,13 +86,15 @@
 <script>
   var $ = document.querySelector.bind(document);
   var $$ = document.querySelectorAll.bind(document);
-  document.querySelector('#chip1').addEventListener('remove', function(event) {
-    $('#toast1').show();
-  });
   var chips = $$('paper-chip');
+  function onRemoveChip() {
+    var toast = this.parentNode.querySelector('paper-toast');
+    if (toast) toast.show();
+  }
   for (var i=0; i<chips.length; i++) {
+    chips[i].addEventListener('remove', onRemoveChip);
     chips[i].style.zIndex = chips.length - i;
-    chips[i].setAttribute('tabindex', i+1);
+    chips[i].setAttribute('tabindex', i + 1);
   }
 </script>
 </html>
