@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+  <title>paper-chip Demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../paper-chip.html">
+  <link rel="import" href="../../paper-styles/paper-styles.html">
+  <link rel="import" href="../../paper-toast/paper-toast.html">
+  <link rel="import" href="avatars.html">
+
+
+  <style is="custom-style">
+    body {
+      @apply(--paper-font-body1);
+      color: #333;
+    }
+    section {
+      margin: 24px;
+    }
+    #chip3 .icon {
+      background-color: var(--default-primary-color);
+    }
+  </style>
+
+</head>
+<body unresolved>
+  <section>
+    <p>Removable chip with <code>iron-icon</code> and a secondary label:</p>
+    <paper-chip removable id="chip1" active>
+      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
+      <h1>John Doe</h1>
+      <h2>doeboy@example.com</h2>
+    </paper-chip>
+    <paper-toast id="toast1" text="John Doe was removed!"></paper-toast>
+  </section>
+
+  <section>
+    <p>Same chip, with animated transition:</p>
+    <paper-chip removable animated id="chip1a">
+      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
+      <h1>John Doe</h1>
+      <h2>doeboy@example.com</h2>
+    </paper-chip>
+    <paper-toast text="John Doe was removed!"></paper-toast>
+  </section>
+
+  <section>
+    <p>Animated chip with more content:</p>
+    <paper-chip removable animated id="chip2">
+      <iron-icon class="icon" icon="avatars:avatar-13"></iron-icon>
+      <h1>Jane Doe</h1>
+      <h2>janedoe@example.com</h2>
+      <address>
+        123 Avenue Way<br>
+        Anytown, USA 12345<br>
+        <br>
+        555-123-4567
+      </address>
+    </paper-chip>
+  </section>
+
+  <section>
+    <p>Basic chip with single letter instead of an icon:</p>
+    <paper-chip id="chip3">
+      <div class="icon">P</div>
+      <h1>Peter Parker</h1>
+      <h2>pete@dailybugle.com</h2>
+    </paper-chip>
+  </section>
+
+  <section>
+    <p>Basic chip with no icon</p>
+    <paper-chip id="chip3">
+      <h1>Peter Parker</h1>
+      <h2>pete@dailybugle.com</h2>
+    </paper-chip>
+  </section>
+
+</body>
+<script>
+  var $ = document.querySelector.bind(document);
+  var $$ = document.querySelectorAll.bind(document);
+  var chips = $$('paper-chip');
+  function onRemoveChip() {
+    var toast = this.parentNode.querySelector('paper-toast');
+    if (toast) toast.show();
+  }
+  for (var i=0; i<chips.length; i++) {
+    chips[i].addEventListener('remove', onRemoveChip);
+    chips[i].style.zIndex = chips.length - i;
+    chips[i].setAttribute('tabindex', i + 1);
+  }
+</script>
+</html>

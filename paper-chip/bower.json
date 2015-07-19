@@ -1,0 +1,35 @@
+{
+  "name": "paper-chip",
+  "version": "1.0.0",
+  "authors": [
+    "Ben Davis <bendavis78@gmail.com>"
+  ],
+  "description": "Polymer element that represents a complex entity such as a calendar event or a contact.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "chip",
+    "paper-chip"
+  ],
+  "main": "paper-chip.html",
+  "license": "MIT",
+  "homepage": "http://bendavis78.github.io/paper-chip/",
+  "ignore": [
+    "/.*",
+    "/tests/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^1.0.0",
+    "paper-material": "PolymerElements/paper-material#^1.0.0",
+    "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^1.0.0",
+    "paper-toast": "PolymerElements/paper-toast#^1.0.0"
+  }
+}

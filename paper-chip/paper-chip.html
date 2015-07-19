@@ -1,0 +1,216 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../iron-behaviors/iron-button-state.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-styles/paper-styles.html">
+
+<!--
+Material Design: [Chips](http://www.google.com/design/spec/components/chips.html)
+
+`paper-chip` is a small element that represents a complex entity such as a
+calendar event or a contact. The chip can be in an opened or closed state. In
+its closed state, it contains an icon and a short title. In its open state, the
+chip expands to show more detail about the represented entity, as well as
+(optionally) a "remove" button that removes the chip element from the DOM.
+
+The following child elements may be placed within the chip tag define its
+content:
+
+  * .icon: The icon representing the chip. This may be any element, for
+            example, a `<iron-icon>` or a simple `<span>` with a single letter
+  * h1: The chip label, shown in both closed and opened states
+  * h2: A secondary label, shown only in the opened state
+
+The `removable` attribute can be used to add a button which removes the chip
+from the DOM.
+
+## Examples:
+
+Removable chip with iron-icon
+
+    <paper-chip removable>
+      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
+      <h1>John Doe</h1>
+      <h2>jdoe@example.com</h2>
+    </paper-chip>
+
+Basic chip with single letter instead of an icon
+
+    <paper-chip label="Jane Doe">
+      <div class="icon">J</div>
+      <h1>jdoe@example.com</h1>
+    </paper-chip>
+
+
+@element paper-chip
+@blurb A basic "chip" element representing an icon/image and a short piece of text.
+@homepage http://bendavis78.github.io/paper-chip/
+@demo demo/index.html
+-->
+<dom-module id="paper-chip">
+  <link rel="import" type="css" href="paper-chip.css">
+  <template>
+    <iron-a11y-keys target="{{}}" keys="space enter" on-keys-pressed="toggleOpened"></iron-a11y-keys>
+    <paper-material id="shadow" elevation="{{_elevation}}" animated$="{{animated}}">
+      <div id="main">
+        <div id="chip">
+          <div id="icon">
+            <content select=".icon"></content>
+          </div>
+          <div id="label">
+            <content select="h1"></content>
+            <content select="h2"></content>
+          </div>
+          <paper-icon-button id="removeBtn" icon="close" on-tap="remove"></paper-icon-button>
+        </div>
+        <div id="content">
+          <content></content>
+        </div>
+      </div>
+    </paper-material>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'paper-chip',
+      behaviors: [
+        Polymer.IronButtonState,
+        Polymer.IronControlState,
+      ],
+      properties: {
+        /**
+         * Whether or not the chip is removable. If `true`, a remove button will
+         * be shown.
+         * 
+         * @attribute removable
+         * @type boolean
+         * @default false
+         */
+        removable: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        },
+
+        /**
+         * Whether or not the chip uses an animated transition between opened and
+         * closed states
+         *
+         * @attribute animated
+         * @type boolean
+         * @default true
+         */
+        animated: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        },
+
+        /**
+         * Whether or not the chip is in its opened state.
+         * 
+         * @attribute opened
+         * @type boolean
+         * @default false
+         */
+        opened: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          observer: '_openedChanged'
+        },
+
+        /**
+         * Whether or not the chip state is "active". If `true`, the main chip
+         * area will be highlighted when in the opened state.
+         *
+         * @attribute active
+         * @type boolean
+         * @default false
+         */
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        },
+
+        _elevation: {
+          type: Number
+        }
+      },
+      listeners: {
+        up: '_upAction',
+        blur: '_blurAction'
+      },
+      observers: [
+        '_calculateElevation(opened, focused, disabled, active, pressed)'
+      ],
+
+      ready: function() {
+        if (this.$.removeBtn) {
+          // disable tabindex on remove button so that tabindex can be used for chips
+          this.$.removeBtn.removeAttribute('tabindex');
+        }
+      },
+      _calculateElevation: function() {
+        var e = 0;
+        if (this.focused || this.pressed || this.receivedFocusFromKeyboard) {
+          e = 1;
+        }
+        if (this.opened) {
+          e = 4;
+        }
+        this._elevation = e;
+      },
+      _upAction: function(e) {
+        this.toggleOpened();
+      },
+      _blurAction: function() {
+        this.opened = false;
+      },
+      /**
+       * Fired before the element is removed. This event is cancelable.
+       * 
+       * @event remove
+       */
+      remove: function() {
+        var e = this.fire('remove', {}, this, false, true);
+        if (!e.defaultPrevented) {
+          this.parentNode.removeChild(this);
+        }
+      },
+      toggleOpened: function() {
+        this.opened = !this.opened;
+      },
+      _openedChanged: function() {
+        if (!this.animated) {
+          return;
+        }
+        var $content, width, height;
+        $content = this.$.content;
+        width = height = '';
+        if (this.opened) {
+          // temporarily disable transitions in order to take measurements of
+          // the content area, allowing for a proper css transision.
+          this.animated = false;
+          this.opened = true;
+          width = $content.offsetWidth + 'px';
+          height = $content.offsetHeight + 'px';
+          this.opened = false;
+          this._forceReflow();
+          this.opened = true;
+          this.animated = true;
+        }
+        $content.style.width = width;
+        $content.style.height = height;
+      },
+      _forceReflow: function() {
+        return this.offsetHeight;
+      }
+    });
+  </script>
+
+</dom-module>
