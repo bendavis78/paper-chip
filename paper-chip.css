@@ -1,10 +1,10 @@
-:root {
-  --paper-chip-bg-opened: var(--primary-background-color);
-  --paper-chip-color-opened: var(--text-primary-color);
-  --paper-chip-bg-closed: var(--divider-color);
-  --paper-chip-icon-bg: var(--default-primary-color);
-  --paper-chip-icon-color: var(--text-primary-color);
-}
+/**
+ * closed-color
+ * opened-color
+ * icon-bg
+ * pressed-color
+ * activated-color
+ */
 :host {
   display: inline-block;
   vertical-align: top;
@@ -25,12 +25,10 @@
   border-radius: 16px;
 }
 #main {
-  background: var(--paper-chip-bg-closed);
+  background-color: var(--paper-chip-background-color, --paper-grey-200);
   position: relative;
+  color: var(--paper-chip-secondary-text-color, --secondary-text-color);
   @apply(--layout-vertical);
-}
-#main, ::content {
-  color: var(--secondary-text-color);
 }
 #chip {
   box-sizing: border-box;
@@ -38,7 +36,7 @@
   @apply(--layout-horizontal);
   @apply(--layout-center);
 }
-paper-shadow {
+paper-material {
   border-radius: 16px;
 }
 #icon {
@@ -57,15 +55,16 @@ paper-shadow {
   vertical-align: middle;
   font-size: 16px;
   font-weight: bold;
-  background: var(--paper-chip-icon-bg);
-  color: #fff;
+  background-color: var(--paper-chip-icon-background-color, --paper-grey-500);
+  color: var(--paper-chip-icon-text-color, --text-primary-color);
+  @apply(--layout-flex);
 }
-#icon ::content core-icon.icon,
-#icon ::content core-icon.icon svg {
+#icon ::content iron-icon.icon,
+#icon ::content iron-icon.icon svg {
   width: 32px;
   height: 32px;
 }
-#icon ::content core-icon.icon {
+#icon ::content iron-icon.icon {
   vertical-align: bottom;
 }
 #label {
@@ -76,7 +75,6 @@ paper-shadow {
 #label ::content h1,
 #label ::content h2 {
   white-space: nowrap;
-  color: #757575;
   margin: 0;
   font-weight: normal;
   font-size: 14px;
@@ -88,8 +86,8 @@ paper-shadow {
   padding: 0;
 }
 #removeBtn {
-  background: #bbbbbb;
-  color: #fff;
+  background-color: var(--paper-chip-removebtn-bg, --paper-grey-200);
+  color: var(--paper-chip-removebtn-text, #fff);
   padding: 0;
   margin: 0;
   width: 20px;
@@ -97,25 +95,23 @@ paper-shadow {
   margin-left: 20px;
   border-radius: 100%;
 }
-#removeBtn /deep/ core-icon {
+#removeBtn /deep/ iron-icon {
   width: 16px;
   height: 16px;
   margin: 2px;
 }
-#content {
-  @apply(--layout-flex);
-}
 /* pressed state */
 :host([pressed]) #main {
-  background: #d6d6d6;
+  background-color: var(--paper-chip-pressed-background, --paper-grey-300);
 }
 
 /* initially hidden elements */
 :host(:not([opened])) #label ::content h2 {
   font-size: 0;
+  height: 0;
 }
 :host(:not([opened])) #removeBtn,
-:host(:not([opened])) #removeBtn /deep/ core-icon {
+:host(:not([opened])) #removeBtn /deep/ iron-icon {
   width: 0;
   height: 0;
   margin: 0;
@@ -143,34 +139,34 @@ paper-shadow {
 :host([opened]) #chip,
 :host([opened]) #content ::content > * {
   padding: 16px 12px;
-  background: #fff;
+  background-color: var(--paper-chip-opened-bg, --paper-grey-50);
 }
 :host([opened]) #label ::content h1 {
-  color: #000;
+  color: var(--primary-text-color);
+  font-size: 16px;
 }
-:host([opened]) paper-shadow {
+:host([opened]) paper-material {
   border-radius: 0; 
 }
 :host([opened]) #icon ::content .icon,
-:host([opened]) #icon ::content core-icon.icon svg {
+:host([opened]) #icon ::content iron-icon.icon svg {
   font-size: 20px;
   width: 40px;
   height: 40px;
   line-height: 40px;
 }
 :host([opened]) #label ::content h1 {
-  font-size: 16px;
 }
 
 /* open + active state */
 :host([opened][active]) #chip,
 :host([opened][active]) ::content {
-  background: #00b8d4;
+  background-color: #00b8d4;
   color: #fff;
 }
 :host([opened][active]) #removeBtn {
   color: #00b8d4;
-  background: #fff;
+  background-color: #fff;
 }
 :host([opened][active]) #chip #label ::content h1 {
   color: #fff;
