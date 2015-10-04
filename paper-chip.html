@@ -141,6 +141,7 @@ Basic chip with single letter instead of an icon
         border-radius: 100%;
         background-color: var(--paper-chip-removebtn-background-color, --paper-grey-400);
         color: var(--paper-chip-removebtn-icon-color, --text-primary-color);
+        cursor: pointer;
       }
       #removeBtn iron-icon {
         padding: 2px;
@@ -320,8 +321,8 @@ Basic chip with single letter instead of an icon
         }
       },
       listeners: {
-        up: '_upAction',
-        blur: '_blurAction'
+        tap: '_onTap',
+        blur: '_onBlur'
       },
       hostAttributes: {
         tabindex: '0'
@@ -341,10 +342,10 @@ Basic chip with single letter instead of an icon
         }
         return 0;
       },
-      _upAction: function() {
+      _onTap: function() {
         this.toggleOpened();
       },
-      _blurAction: function() {
+      _onBlur: function() {
         this.opened = false;
       },
       /**
