@@ -162,7 +162,8 @@ Basic chip with single letter instead of an icon
         font-size: 0;
         height: 0;
       }
-      :host(:not([opened])) #removeBtn {
+      :host(:not([opened])) #removeBtn,
+      :host(:not([opened])) #removeBtn .icon {
         width: 0;
         height: 0;
         margin: 0;
@@ -239,7 +240,7 @@ Basic chip with single letter instead of an icon
             <content select="h2"></content>
           </div>
           <div id="removeBtn" on-tap="remove" aria-label="remove button">
-            <iron-icon icon="close"></iron-icon>
+            <iron-icon icon="close" class="icon"></iron-icon>
           </div>
         </div>
         <div id="content">
@@ -354,7 +355,7 @@ Basic chip with single letter instead of an icon
        * @event remove
        */
       remove: function() {
-        var e = this.fire('remove', {}, this, false, true);
+        var e = this.fire('remove', {}, {bubbles: false, cancelable: true});
         if (!e.defaultPrevented) {
           this.parentNode.removeChild(this);
         }
