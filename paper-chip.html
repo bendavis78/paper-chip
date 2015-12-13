@@ -407,7 +407,8 @@ Basic chip with single letter instead of an icon
        * 
        * @event remove
        */
-      remove: function() {
+      remove: function(event) {
+        event.stopPropagation();
         var e = this.fire('remove', {}, {bubbles: false, cancelable: true});
         if (!e.defaultPrevented) {
           this.parentNode.removeChild(this);
