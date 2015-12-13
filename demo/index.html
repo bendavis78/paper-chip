@@ -10,133 +10,164 @@
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
   <link rel="import" href="../paper-chip.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../paper-styles/paper-styles.html">
   <link rel="import" href="../../paper-toast/paper-toast.html">
   <link rel="import" href="../../paper-input/paper-input.html">
+  <link rel="import" href="../../iron-input/iron-input.html">
   <link rel="import" href="avatars.html">
 
-
-  <style is="custom-style">
-    body {
-      @apply(--paper-font-body1);
-      color: #333;
-    }
-    section {
-      margin: 24px;
+  <style is="custom-style" include="demo-pages-shared-styles">
+    demo-snippet {
+      max-width: 760px;
     }
     #chip3 .icon {
       background-color: var(--default-primary-color);
     }
-    paper-chip {
-      --paper-chip-label: {
-        font-size: 13px;
-      }
+    #tags label {
+      line-height: 40px;
     }
-    .paper-input-input > paper-chip {
-      margin-right: 4px;
+    #tags .tags-input {
+      min-height: 32px;
+      padding: 4px 0;
+      z-index: 10;
+    }
+    .tags-input > paper-chip {
+      z-index: 1;
+      margin: 0 4px 0 0;
     }
   </style>
 
 </head>
 <body unresolved>
-  <section>
-    <p>Removable chip with <code>iron-icon</code> and a secondary label:</p>
-    <paper-chip removable id="chip1">
-      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
-      <div class="label">John Doe</div>
-      <div class="caption">doeboy@example.com</div>
-    </paper-chip>
+  <h3>Removable chip with <code>iron-icon</code> and a secondary label</h3>
+  <demo-snippet>
+    <template>
+      <paper-chip removable>
+        <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
+        <div class="label">John Doe</div>
+        <div class="caption">doeboy@example.com</div>
+      </paper-chip>
+    </template>
     <paper-toast id="toast1" text="John Doe was removed!"></paper-toast>
-  </section>
+  </demo-snippet>
 
-  <section>
-    <p>Same chip, with animated transition:</p>
-    <paper-chip removable animated id="chip1a">
-      <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
-      <div class="label">John Doe</div>
-      <div class="caption">doeboy@example.com</div>
-    </paper-chip>
+  <h3>Same chip, with animated transition</h3>
+  <demo-snippet>
+    <template>
+      <paper-chip removable animated>
+        <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
+        <div class="label">John Doe</div>
+        <div class="caption">doeboy@example.com</div>
+      </paper-chip>
+    </template>
     <paper-toast text="John Doe was removed!"></paper-toast>
-  </section>
+  </demo-snippet>
 
-  <section>
-    <p>Animated chip with more content:</p>
-    <paper-chip removable animated id="chip2">
-      <iron-icon class="icon" icon="avatars:avatar-13"></iron-icon>
-      <div class="label">Jane Doe</div>
-      <div class="caption">janedoe@example.com</div>
-      <address>
-        123 Avenue Way<br>
-        Anytown, USA 12345<br>
-        <br>
-        555-123-4567
-      </address>
-    </paper-chip>
-  </section>
+  <h3>Animated chip with more content</h3>
+  <demo-snippet>
+    <template>
+      <paper-chip removable animated>
+        <iron-icon class="icon" icon="avatars:avatar-13"></iron-icon>
+        <div class="label">Jane Doe</div>
+        <div class="caption">janedoe@example.com</div>
+        <address>
+          123 Avenue Way<br>
+          Anytown, USA 12345<br>
+          <br>
+          555-123-4567
+        </address>
+      </paper-chip>
+    </template>
+  </demo-snippet>
 
-  <section>
-    <p>Chip with single letter instead of an icon:</p>
-    <paper-chip id="chip3">
-      <div class="icon">P</div>
-      <div class="label">Peter Parker</div>
-      <div class="caption">pete@dailybugle.com</div>
-    </paper-chip>
-  </section>
+  <h3>Chip with single letter instead of an icon</h3>
+  <demo-snippet>
+    <template>
+      <paper-chip>
+        <div class="icon">P</div>
+        <div class="label">Peter Parker</div>
+        <div class="caption">pete@dailybugle.com</div>
+      </paper-chip>
+    </template>
+  </demo-snippet>
 
-  <section>
-    <p>Single-line chip with no icon</p>
-    <paper-chip id="chip3" single-line>
-      <div class="label">Peter Parker</div>
-    </paper-chip>
-  </section>
+  <h3>Single-line removable chip (does not open)</h3>
+  <demo-snippet>
+    <template>
+      <paper-chip removable single-line>
+        <div class="label">Example Chip</div>
+      </paper-chip>
+    </template>
+  </demo-snippet>
 
-  <section>
-    <p>Single-line removable chip:</p>
-    <paper-chip removable single-line>
-      <div class="label">Example Chip</div>
-    </paper-chip>
-  </section>
-
-  <section>
-    <p>Single-line removable chip with <code>iron-icon</code>:</p>
-    <paper-chip id="chip3" removable single-line>
-      <iron-icon class="icon" icon="avatars:avatar-13"></iron-icon>
-      <div class="label">Jane Doe</div>
-    </paper-chip>
-  </section>
-
-  <section>
-    <p>Chips in an input field</p>
-    <paper-input-container>
-      <div class="paper-input-input layout horizontal">
-        <paper-chip single-line removable>
-          <div class="label">Chip 1</div>
-        </paper-chip>
-        <paper-chip single-line removable>
-          <div class="label">Chip 2</div>
-        </paper-chip>
-        <paper-chip single-line removable>
-          <div class="label">Chip 3</div>
-        </paper-chip>
-        <input is="iron-input" class="flex">
-      </div>
-    </paper-input-container>
-  </section>
-
+  <h3>Example chip input field using paper-input-container</h3>
+  <demo-snippet>
+    <template>
+      <template is="dom-bind" id="chipInputDemo">
+        <paper-input-container id="tags">
+          <label>Tags</label>
+          <!-- a hidden iron-input holds the bind-value value for paper-input-container -->
+          <input is="iron-input" type="hidden" bind-value="{{tagsString}}">
+          <div class="tags-input layout horizontal wrap">
+            <template is="dom-repeat" items="{{tags}}">
+              <paper-chip removable single-line>
+                <span class="label">{{item}}</span>
+              </paper-chip>
+            </template>
+            <input id="tagInput" type="text" class="flex">
+          </div>
+        </paper-input-container>
+      </template>
+    </template>
+  </demo-snippet>
 </body>
 <script>
+  var $ = document.querySelector.bind(document);
   var $$ = document.querySelectorAll.bind(document);
-  var chips = $$('paper-chip');
-  function onRemoveChip() {
-    var toast = this.parentNode.querySelector('paper-toast');
-    if (toast) {
-      toast.show();
+
+  document.addEventListener('WebComponentsReady', function() {
+    var scope = $('#chipInputDemo');
+
+    // setup all chips
+    var chips = $$('paper-chip');
+    function onRemoveChip() {
+      var toast = this.parentNode.querySelector('paper-toast');
+      if (toast) {
+        toast.show();
+      }
     }
-  }
-  for (var i=0; i<chips.length; i++) {
-    chips[i].addEventListener('remove', onRemoveChip);
-    chips[i].style.zIndex = chips.length - i;
-    chips[i].setAttribute('tabindex', i + 1);
-  }
+    for (var i=0; i<chips.length; i++) {
+      chips[i].addEventListener('remove', onRemoveChip);
+      chips[i].style.zIndex = chips.length - i;
+      chips[i].setAttribute('tabindex', i + 1);
+    }
+
+    // setup tags input
+    scope.tags = [];
+
+    var tagInput = $('#tagInput');
+    tagInput.addEventListener('input', function(event) {
+      var value = tagInput.value;
+      if (value.slice(-1) === ' ') {
+        scope.push('tags', value);
+        value = '';
+      }
+      value = value.trim();
+      scope.tagsString = scope.tags.join(' ') + value;
+      tagInput.value = value;
+    });
+    tagInput.addEventListener('keydown', function(event) {
+      if (tagInput.value === '' && event.code === 'Backspace') {
+        scope.pop('tags');
+        scope.tagsString = scope.tags.join(' ');
+      } else if (tagInput.value && event.code === 'Enter') {
+        scope.push('tags', tagInput.value.trim());
+        tagInput.value = '';
+      }
+    });
+
+  });
 </script>
 </html>
