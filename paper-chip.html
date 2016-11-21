@@ -67,7 +67,7 @@ Basic chip with single letter instead of an icon
         @apply(--paper-chip);
       }
       :host([animated]) *,
-      :host([animated]) ::slotted * {
+      :host([animated]) ::slotted(*) {
         transition: 200ms ease-in;
       }
       #main, #chip {
@@ -93,7 +93,7 @@ Basic chip with single letter instead of an icon
         @apply(--layout-center);
         @apply(--layout-center-justified);
       }
-      #icon ::slotted .icon {
+      #icon ::slotted(.icon) {
         margin-right: -4px;
         width: 32px;
         height: 32px;
@@ -108,12 +108,12 @@ Basic chip with single letter instead of an icon
         color: var(--paper-chip-icon-text-color, --text-primary-color);
         @apply(--layout-flex);
       }
-      #icon ::slotted iron-icon.icon,
-      #icon ::slotted iron-icon.icon svg {
+      #icon ::slotted(iron-icon.icon),
+      #icon ::slotted(iron-icon.icon svg) { /* FIXME: only top-level selectors allowed */
         width: 32px;
         height: 32px;
       }
-      #icon ::slotted iron-icon.icon {
+      #icon ::slotted(iron-icon.icon) {
         vertical-align: bottom;
       }
       #label {
@@ -124,18 +124,18 @@ Basic chip with single letter instead of an icon
       :host([single-line]:not([removable])) #label {
         padding-right: 12px;
       }
-      #label ::slotted .label,
-      #label ::slotted .caption {
+      #label ::slotted(.label),
+      #label ::slotted(.caption) {
         display: block;
         white-space: nowrap;
         margin: 0;
         font-weight: normal;
         font-size: 14px;
       }
-      #label ::slotted .label {
+      #label ::slotted(.label) {
         @apply(--paper-chip-label);
       }
-      #label ::slotted .caption {
+      #label ::slotted(.caption) {
         @apply(--paper-chip-caption);
       }
       .icon-btn-wrapper {
@@ -168,7 +168,7 @@ Basic chip with single letter instead of an icon
       }
 
       /* initially hidden elements */
-      :host(:not([opened])) #label ::slotted .caption {
+      :host(:not([opened])) #label ::slotted(.caption) {
         color: var(--paper-chip-secondary-text-color, --secondary-text-color);
         font-size: 0;
         height: 0;
@@ -189,7 +189,7 @@ Basic chip with single letter instead of an icon
         min-width: 100%;
         overflow: hidden;
       }
-      :host(:not([opened])) #label ::slotted .label {
+      :host(:not([opened])) #label ::slotted(.label) {
         color: var(--paper-chip-secondary-text-color, --secondary-text-color);
       }
 
@@ -208,11 +208,11 @@ Basic chip with single letter instead of an icon
         height: 72px;
       }
       :host([opened]) #chip,
-      :host([opened]) #content ::slotted > * {
+      :host([opened]) #content ::slotted(*) {
         padding: 16px 12px;
         background-color: var(--paper-chip-opened-background-color, --paper-grey-50);
       }
-      :host([opened]) #label ::slotted .label {
+      :host([opened]) #label ::slotted(.label) {
         color: var(--paper-chip-primary-text-color, --primary-text-color);
         font-size: 16px;
         @apply(--paper-chip-label-opened);
@@ -220,8 +220,8 @@ Basic chip with single letter instead of an icon
       :host([opened]) paper-material {
         border-radius: 0; 
       }
-      :host([opened]) #icon ::slotted .icon,
-      :host([opened]) #icon ::slotted iron-icon.icon svg {
+      :host([opened]) #icon ::slotted(.icon),
+      :host([opened]) #icon ::slotted(iron-icon.icon svg) { /* FIXME: only top-level selectors allowed)
         font-size: 20px;
         width: 40px;
         height: 40px;
@@ -248,10 +248,10 @@ Basic chip with single letter instead of an icon
         color: var(--paper-chip-active-color, --accent-color);
         background-color: var(--paper-chip-active-text-color, --text-primary-color);
       }
-      :host([opened][active]) #chip #label ::slotted .label {
+      :host([opened][active]) #chip #label ::slotted(.label) {
         color: var(--paper-chip-active-text-color, --text-primary-color);
       }
-      :host([opened][active]) #chip #label ::slotted h2 {
+      :host([opened][active]) #chip #label ::slotted(h2) {
         color: var(--paper-chip-active-secondary-text-color, --text-primary-color);
       }
     </style>
