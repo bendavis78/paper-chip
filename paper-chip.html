@@ -218,7 +218,7 @@ Basic chip with single letter instead of an icon
         @apply(--paper-chip-label-opened);
       }
       :host([opened]) paper-material {
-        border-radius: 0; 
+        border-radius: 0;
       }
       :host([opened]) #icon ::slotted([name=icon]),
       :host([opened]) #icon ::slotted(iron-icon.icon svg) { /* FIXME: only top-level selectors allowed)
@@ -259,11 +259,11 @@ Basic chip with single letter instead of an icon
       <div id="main">
         <div id="chip">
           <div id="icon">
-            <slot name="icon"></slot>
+            <div slot="icon"></div>
           </div>
           <div id="label">
-            <slot name="label"></slot>
-            <slot name="caption"></slot>
+            <div slot="label"></div>
+            <div slot="caption"></div>
           </div>
           <div id="removeBtn" on-tap="remove" aria-label="remove button">
             <iron-icon icon="close" class="icon"></iron-icon>
@@ -287,7 +287,7 @@ Basic chip with single letter instead of an icon
         /**
          * Whether or not the chip is removable. If `true`, a remove button will
          * be shown.
-         * 
+         *
          * @attribute removable
          * @type boolean
          * @default false
@@ -334,7 +334,7 @@ Basic chip with single letter instead of an icon
 
         /**
          * Whether or not the chip is in its opened state.
-         * 
+         *
          * @attribute opened
          * @type boolean
          * @default false
@@ -404,7 +404,7 @@ Basic chip with single letter instead of an icon
       },
       /**
        * Fired before the element is removed. This event is cancelable.
-       * 
+       *
        * @event remove
        */
       remove: function(event) {
