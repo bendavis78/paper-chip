@@ -33,15 +33,15 @@ Removable chip with iron-icon
 
     <paper-chip removable>
       <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
-      <div class="labeL">John Doe</div>
-      <div class="caption">jdoe@example.com</div>
+      <div slot="label">John Doe</div>
+      <div slot="caption">jdoe@example.com</div>
     </paper-chip>
 
 Basic chip with single letter instead of an icon
 
     <paper-chip label="Jane Doe">
-      <div class="icon">J</div>
-      <div class="label">jdoe@example.com</div>
+      <div slot="icon">J</div>
+      <div slot="label">jdoe@example.com</div>
     </paper-chip>
 
 
@@ -67,7 +67,7 @@ Basic chip with single letter instead of an icon
         @apply(--paper-chip);
       }
       :host([animated]) *,
-      :host([animated]) ::content * {
+      :host([animated]) ::slotted(*) {
         transition: 200ms ease-in;
       }
       #main, #chip {
@@ -93,7 +93,7 @@ Basic chip with single letter instead of an icon
         @apply(--layout-center);
         @apply(--layout-center-justified);
       }
-      #icon ::content .icon {
+      #icon ::slotted([slot=icon]) {
         margin-right: -4px;
         width: 32px;
         height: 32px;
@@ -108,12 +108,12 @@ Basic chip with single letter instead of an icon
         color: var(--paper-chip-icon-text-color, --text-primary-color);
         @apply(--layout-flex);
       }
-      #icon ::content iron-icon.icon,
-      #icon ::content iron-icon.icon svg {
+      #icon ::slotted(iron-icon.icon),
+      #icon ::slotted(iron-icon.icon svg) { /* FIXME: only top-level selectors allowed */
         width: 32px;
         height: 32px;
       }
-      #icon ::content iron-icon.icon {
+      #icon ::slotted(iron-icon.icon) {
         vertical-align: bottom;
       }
       #label {
@@ -124,18 +124,18 @@ Basic chip with single letter instead of an icon
       :host([single-line]:not([removable])) #label {
         padding-right: 12px;
       }
-      #label ::content .label,
-      #label ::content .caption {
+      #label ::slotted([slot=label]),
+      #label ::slotted([slot=caption]) {
         display: block;
         white-space: nowrap;
         margin: 0;
         font-weight: normal;
         font-size: 14px;
       }
-      #label ::content .label {
+      #label ::slotted([slot=label]) {
         @apply(--paper-chip-label);
       }
-      #label ::content .caption {
+      #label ::slotted([slot=caption]) {
         @apply(--paper-chip-caption);
       }
       .icon-btn-wrapper {
@@ -168,7 +168,7 @@ Basic chip with single letter instead of an icon
       }
 
       /* initially hidden elements */
-      :host(:not([opened])) #label ::content .caption {
+      :host(:not([opened])) #label ::slotted([slot=caption]) {
         color: var(--paper-chip-secondary-text-color, --secondary-text-color);
         font-size: 0;
         height: 0;
@@ -189,7 +189,7 @@ Basic chip with single letter instead of an icon
         min-width: 100%;
         overflow: hidden;
       }
-      :host(:not([opened])) #label ::content .label {
+      :host(:not([opened])) #label ::slotted([slot=label]) {
         color: var(--paper-chip-secondary-text-color, --secondary-text-color);
       }
 
@@ -208,20 +208,20 @@ Basic chip with single letter instead of an icon
         height: 72px;
       }
       :host([opened]) #chip,
-      :host([opened]) #content ::content > * {
+      :host([opened]) #content ::slotted(*) {
         padding: 16px 12px;
         background-color: var(--paper-chip-opened-background-color, --paper-grey-50);
       }
-      :host([opened]) #label ::content .label {
+      :host([opened]) #label ::slotted([slot=label]) {
         color: var(--paper-chip-primary-text-color, --primary-text-color);
         font-size: 16px;
         @apply(--paper-chip-label-opened);
       }
       :host([opened]) paper-material {
-        border-radius: 0; 
+        border-radius: 0;
       }
-      :host([opened]) #icon ::content .icon,
-      :host([opened]) #icon ::content iron-icon.icon svg {
+      :host([opened]) #icon ::slotted([slot=icon]),
+      :host([opened]) #icon ::slotted(iron-icon.icon svg) { /* FIXME: only top-level selectors allowed)
         font-size: 20px;
         width: 40px;
         height: 40px;
@@ -240,18 +240,18 @@ Basic chip with single letter instead of an icon
 
       /* open + active state */
       :host([opened][active]) #chip,
-      :host([opened][active]) ::content {
+      :host([opened][active]) ::slotted {
         background-color: var(--paper-chip-active-color, --accent-color);
-        color: var(--paper-chip-active-text-color, --text-primary-color);
+				color: var(--paper-chip-active-text-color, --text-primary-color);
       }
       :host([opened][active]) #removeBtn {
         color: var(--paper-chip-active-color, --accent-color);
         background-color: var(--paper-chip-active-text-color, --text-primary-color);
       }
-      :host([opened][active]) #chip #label ::content .label {
+      :host([opened][active]) #chip #label ::slotted([slot=label]) {
         color: var(--paper-chip-active-text-color, --text-primary-color);
       }
-      :host([opened][active]) #chip #label ::content h2 {
+      :host([opened][active]) #chip #label ::slotted(h2) {
         color: var(--paper-chip-active-secondary-text-color, --text-primary-color);
       }
     </style>
@@ -259,18 +259,18 @@ Basic chip with single letter instead of an icon
       <div id="main">
         <div id="chip">
           <div id="icon">
-            <content select=".icon"></content>
+            <slot name="icon"></slot>
           </div>
           <div id="label">
-            <content select=".label"></content>
-            <content select=".caption"></content>
+            <slot name="label"></slot>
+            <slot name="caption"></slot>
           </div>
           <div id="removeBtn" on-tap="remove" aria-label="remove button">
             <iron-icon icon="close" class="icon"></iron-icon>
           </div>
         </div>
         <div id="content">
-          <content></content>
+          <slot></slot>
         </div>
       </div>
     </paper-material>
@@ -287,7 +287,7 @@ Basic chip with single letter instead of an icon
         /**
          * Whether or not the chip is removable. If `true`, a remove button will
          * be shown.
-         * 
+         *
          * @attribute removable
          * @type boolean
          * @default false
@@ -334,7 +334,7 @@ Basic chip with single letter instead of an icon
 
         /**
          * Whether or not the chip is in its opened state.
-         * 
+         *
          * @attribute opened
          * @type boolean
          * @default false
@@ -404,7 +404,7 @@ Basic chip with single letter instead of an icon
       },
       /**
        * Fired before the element is removed. This event is cancelable.
-       * 
+       *
        * @event remove
        */
       remove: function(event) {
@@ -432,7 +432,7 @@ Basic chip with single letter instead of an icon
         }
         if (this.animated) {
           var $content, width, height;
-          $content = this.$.content;
+					$content = this.$.content;
           width = height = '';
           if (this.opened) {
             // temporarily disable transitions in order to take measurements of
