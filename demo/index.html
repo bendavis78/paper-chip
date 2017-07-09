@@ -16,6 +16,7 @@
   <link rel="import" href="../../paper-toast/paper-toast.html">
   <link rel="import" href="../../paper-input/paper-input.html">
   <link rel="import" href="../../iron-input/iron-input.html">
+  <link rel="import" href="../../iron-icon/iron-icon.html">
   <link rel="import" href="avatars.html">
 
   <style is="custom-style" include="demo-pages-shared-styles">
@@ -45,9 +46,9 @@
   <demo-snippet>
     <template>
       <paper-chip removable>
-        <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
-        <div class="label">John Doe</div>
-        <div class="caption">doeboy@example.com</div>
+        <iron-icon slot="icon" class="icon" icon="avatars:avatar-1"></iron-icon>
+        <div slot="label">John Doe</div>
+        <div slot="caption">doeboy@example.com</div>
       </paper-chip>
     </template>
     <paper-toast id="toast1" text="John Doe was removed!"></paper-toast>
@@ -57,9 +58,9 @@
   <demo-snippet>
     <template>
       <paper-chip removable animated>
-        <iron-icon class="icon" icon="avatars:avatar-1"></iron-icon>
-        <div class="label">John Doe</div>
-        <div class="caption">doeboy@example.com</div>
+        <iron-icon slot="icon" class="icon" icon="avatars:avatar-1"></iron-icon>
+        <div slot="label">John Doe</div>
+        <div slot="caption">doeboy@example.com</div>
       </paper-chip>
     </template>
     <paper-toast text="John Doe was removed!"></paper-toast>
@@ -69,9 +70,9 @@
   <demo-snippet>
     <template>
       <paper-chip removable animated>
-        <iron-icon class="icon" icon="avatars:avatar-13"></iron-icon>
-        <div class="label">Jane Doe</div>
-        <div class="caption">janedoe@example.com</div>
+        <iron-icon slot="icon" class="icon" icon="avatars:avatar-13"></iron-icon>
+        <div slot="label">Jane Doe</div>
+        <div slot="caption">janedoe@example.com</div>
         <address>
           123 Avenue Way<br>
           Anytown, USA 12345<br>
@@ -86,9 +87,9 @@
   <demo-snippet>
     <template>
       <paper-chip>
-        <div class="icon">P</div>
-        <div class="label">Peter Parker</div>
-        <div class="caption">pete@dailybugle.com</div>
+        <div slot="icon" class="icon">P</div>
+        <div slot="label">Peter Parker</div>
+        <div slot="caption">pete@dailybugle.com</div>
       </paper-chip>
     </template>
   </demo-snippet>
@@ -97,7 +98,7 @@
   <demo-snippet>
     <template>
       <paper-chip removable single-line>
-        <div class="label">Example Chip</div>
+        <div slot="label">Example Chip</div>
       </paper-chip>
     </template>
   </demo-snippet>
@@ -107,13 +108,13 @@
     <template>
       <template is="dom-bind" id="chipInputDemo">
         <paper-input-container id="tags">
-          <label>Tags</label>
+          <label slot="label">Tags</label>
           <!-- a hidden iron-input holds the bind-value value for paper-input-container -->
-          <input is="iron-input" type="hidden" bind-value="{{tagsString}}">
-          <div class="tags-input layout horizontal wrap">
+          <iron-input><input is="iron-input" type="hidden" bind-value="{{tagsString}}" slot="input"></iron-input>
+          <div class="tags-input layout horizontal wrap" slot="input">
             <template is="dom-repeat" items="{{tags}}">
               <paper-chip removable single-line>
-                <span class="label">{{item}}</span>
+                <span slot="label">{{item}}</span>
               </paper-chip>
             </template>
             <input id="tagInput" type="text" class="flex">
