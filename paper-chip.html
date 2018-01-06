@@ -67,7 +67,8 @@ Custom property | Description | Default
 `--paper-chip-active-color` | The background color applied to slots and the remove button while active | `--accent-color`
 `--paper-chip-active-text-color` | The text color applied to slots and the remove button while active | `--text-primary-color`
 `--paper-chip-active-secondary-text-color` | The text color applied to slotted h2 elements within the label while active | `--text-primary-color`
-
+`--paper-chip-hover-background-color` | Background color used when hovering a removable chip | `--paper-grey-600`
+`--paper-chip-hover-text-color` | Text color used when hovering a removable chip | #FFF
 
 @element paper-chip
 @blurb A basic "chip" element representing an icon/image and a short piece of text.
@@ -277,6 +278,17 @@ Custom property | Description | Default
       }
       :host([opened][active]) #chip #label ::slotted(h2) {
         color: var(--paper-chip-active-secondary-text-color, --text-primary-color);
+      }
+
+      :host(:not([opened])[removable]:hover) #main,
+      :host(:not([opened])[removable]:hover) #label ::slotted([slot="label"]),
+      :host(:not([opened])[removable]:hover) #label ::slotted([slot="caption"]) {
+        background-color: var(--paper-chip-hover-background-color, --paper-grey-600);
+        color: var(--paper-chip-hover-text-color, #FFF);
+      }
+      :host(:not([opened])[removable]:hover) #removeBtn {
+        background-color: var(--paper-chip-hover-text-color, #FFF);
+        color: var(--paper-chip-hover-background-color, --paper-grey-600);
       }
     </style>
     <paper-material id="shadow" elevation="{{_elevation}}" animated$="{{animated}}">
