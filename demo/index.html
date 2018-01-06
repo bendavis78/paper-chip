@@ -39,6 +39,25 @@
       z-index: 1;
       margin: 0 4px 0 0;
     }
+    #input > input {
+        position: relative; /* to make a stacking context */
+        outline: none;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--paper-input-container-input-color, var(--primary-text-color));
+        -webkit-appearance: none;
+        text-align: inherit;
+        vertical-align: bottom;
+        /* Firefox sets a min-width on the input, which can cause layout issues */
+        min-width: 0;
+        @apply --paper-font-subhead;
+        @apply --paper-input-container-input;
+      }
   </style>
 
 </head>
@@ -109,16 +128,14 @@
     <template>
       <template is="dom-bind" id="chipInputDemo">
         <paper-input-container id="tags">
-          <label slot="label">Tags</label>
-          <!-- a hidden iron-input holds the bind-value value for paper-input-container -->
-          <iron-input><input is="iron-input" type="hidden" bind-value="{{tagsString}}" slot="input"></iron-input>
+          <label for="input" slot="label">Tags</label>
           <div class="tags-input layout horizontal wrap" slot="input">
             <template is="dom-repeat" items="{{tags}}">
               <paper-chip removable single-line>
                 <span slot="label">{{item}}</span>
               </paper-chip>
             </template>
-            <input id="tagInput" type="text" class="flex">
+            <iron-input bind-value="{{value}}" class="flex" id="input" slot="input"><input id="tagInput" /></iron-input>
           </div>
         </paper-input-container>
       </template>
