@@ -44,6 +44,30 @@ Basic chip with single letter instead of an icon
       <div slot="label">jdoe@example.com</div>
     </paper-chip>
 
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-chip` | Mixin applied to the host | {}
+`--paper-chip-label` | Mixin applied to the slotted label | {}
+`--paper-chip-caption` | Mixin applied to the slotted caption | {}
+`--paper-chip-removebtn` | Mixin applied to the remove button | {}
+`--paper-chip-removebtn-icon` | Mixin applied to the icon for the remove button | {}
+`--paper-chip-content` | Mixin applied to the content | {}
+`--paper-chip-label-opened` | Mixin applied to the label while open | {}
+`--paper-chip-background-color` | The background color applied to the chip | `--paper-grey-200`
+`--paper-chip-secondary-text-color` | The default text color applied to the chip, caption, and label | `--secondary-text-color`
+`--paper-chip-icon-background-color` | The background color applied to the slotted icon | `--paper-grey-500`
+`--paper-chip-icon-text-color` | The default text color applied to the slotted icon | `--text-primary-color`
+`--paper-chip-removebtn-background-color` | The background color applied to the remove button | `--paper-grey-400`
+`--paper-chip-removebtn-icon-color` | The color applied to the remove buttons icon | `--text-primary-color`
+`--paper-chip-pressed-background-color` | The main background color while pressed | `--paper-grey-300`
+`--paper-chip-opened-background-color` | The main background color while opened | `--paper-grey-50`
+`--paper-chip-primary-text-color` | The text color applied to the slotted label | `--primary-text-color`
+`--paper-chip-active-color` | The background color applied to slots and the remove button while active | `--accent-color`
+`--paper-chip-active-text-color` | The text color applied to slots and the remove button while active | `--text-primary-color`
+`--paper-chip-active-secondary-text-color` | The text color applied to slotted h2 elements within the label while active | `--text-primary-color`
+
 
 @element paper-chip
 @blurb A basic "chip" element representing an icon/image and a short piece of text.
@@ -221,7 +245,7 @@ Basic chip with single letter instead of an icon
         border-radius: 0;
       }
       :host([opened]) #icon ::slotted([slot=icon]),
-      :host([opened]) #icon ::slotted(iron-icon.icon svg) { /* FIXME: only top-level selectors allowed)
+      :host([opened]) #icon ::slotted(iron-icon.icon svg) { /* FIXME: only top-level selectors allowed) */
         font-size: 20px;
         width: 40px;
         height: 40px;
