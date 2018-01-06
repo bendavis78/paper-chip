@@ -33,5 +33,8 @@
     "paper-input": "PolymerElements/paper-input#^2.0.0",
     "iron-input": "PolymerElements/iron-input#^2.0.0",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.24"
   }
 }
